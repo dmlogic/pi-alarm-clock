@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import Calendar from './Calendar.vue';
-
+import ordinal from "ordinal"
 
 describe('Calendar', () => {
   
@@ -20,7 +20,7 @@ describe('Calendar', () => {
         let year = await wrapper.find('.calendar-year').text();
 
         expect(day).toBe(days[now.getDay()])
-        expect(date).toContain(now.getDate())
+        expect(date).toBe(ordinal(now.getDate()))
         expect(month).toBe(months[now.getMonth()])
         expect(year).toBe(now.getFullYear().toString())
     })    

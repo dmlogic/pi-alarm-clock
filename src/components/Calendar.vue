@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-
+import ordinal from "ordinal"
 export default {
     data() {
         return {
@@ -27,19 +27,9 @@ export default {
         updateCalendar() {
             let now = new Date;
             this.day = this.days[ now.getDay() ]
-            this.date = now.getDate().toString() + this.ordinal( now.getDate() )
+            this.date = ordinal(now.getDate())
             this.month = this.months[ now.getMonth() ]
             this.year = now.getFullYear().toString()
-        },
-        ordinal(i:number) {
-            i = Math.abs(i)
-            var cent = i % 100
-            if (cent >= 10 && cent <= 20) return 'th'
-            var dec = i % 10
-            if (dec === 1) return 'st'
-            if (dec === 2) return 'nd'
-            if (dec === 3) return 'rd'
-            return 'th'
         }
     },
     mounted() {
