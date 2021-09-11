@@ -8,22 +8,17 @@ export default defineComponent({
   name: 'App',
     data() {
         return {
-            // 'metoffice_key': null,
-            // 'metoffice_lat': null,
             metoffice: {
-                key: import.meta.env.VITE_APIKEY
+                key: import.meta.env.VITE_APIKEY,
+                lat: import.meta.env.VITE_LAT,
+                lng: import.meta.env.VITE_LNG
             }
         }
     },
     components: {
         Clock,
         Calendar,
-        Weather,
-    },
-    mounted() {
-        // this.metoffice_key = import.meta.VITE_APIKEY;
-        console.log("mounted");
-        // console.log(this.);
+        Weather
     }
 });
 </script>

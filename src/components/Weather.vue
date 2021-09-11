@@ -1,7 +1,5 @@
-
 <script>
 import { defineComponent } from 'vue';
-import datapoint from 'datapoint-js';
 export default defineComponent({
     props: [
         'config'
@@ -12,15 +10,28 @@ export default defineComponent({
         }
     },
     methods: {
+        httpCall() {
+
+            // this works in browser without CORS grief
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/sitelist/?key='+this.config.key, false);
+                console.log("about to send");
+            xhr.send();
+
+
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var call_response = JSON.parse(xhr.responseText);
+                console.log("got response");
+                console.log(call_response);
+            } else if (xhr.status <= 599 && xhr.status >= 400) {
+                console.log("API request failed - Code " + xhr.status);
+                console.log(xhr.responseText);
+            }
+
+        }
     },
     mounted() {
-        datapoint.set_key(this.config.key)
-        console.log(datapoint);
-        // const site = datapoint.get_nearest_forecast_site(import.meta.env.VITE_LNG, import.meta.env.VITE_LAT)
-        // console.log(site);
-    //     let forecast = datapoint.get_forecast_for_site(site.id, "3hourly")
-    //     let current_timestep = forecast.days[0].timesteps[0]
-    //     console.log("Temperature is " + current_timestep.temperature.value + "°" + current_timestep.temperature.units + " in " + site.name)
+        this.httpCall();
     }
 });
 </script>
