@@ -5,8 +5,9 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
-    "test": "npm run test:unit:javascript",
-    "test:unit:javascript": "jest --config=jest.config.js src"
+    "test": "npm run test:vue-components",
+    "test:vue-components": "jest --config=jest.config.js src",
+    "test:unit": "jest --config=jest.config.js src/weather/*.spec.js"
   },
   "dependencies": {
     "datapoint-js": "^0.2.1",
