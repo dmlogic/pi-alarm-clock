@@ -8,7 +8,15 @@ function sleep(milliseconds) {
 describe('Weather', () => {
   
     it('does not shit its pants', async () => {
-        const wrapper = mount(Weather)
+        const wrapper = mount(Weather,{
+            propsData: {
+                config: {
+                    key: "mykey",
+                    lat: "myLat",
+                    lng: "myLng",
+                }
+            }
+        })
         expect(1).toEqual(1)
     })    
     

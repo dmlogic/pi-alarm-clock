@@ -1,18 +1,21 @@
 
 <script>
 import { defineComponent } from 'vue';
+import datapoint from 'datapoint-js';
 export default defineComponent({
+    props: [
+        'config'
+    ],
     data() {
         return {
             
-            }
+        }
     },
     methods: {
     },
     mounted() {
-
-        // console.log(import.meta.env);
-        // datapoint.set_key(import.meta.env.VITE_APIKEY)
+        datapoint.set_key(this.config.key)
+        console.log(datapoint);
         // const site = datapoint.get_nearest_forecast_site(import.meta.env.VITE_LNG, import.meta.env.VITE_LAT)
         // console.log(site);
     //     let forecast = datapoint.get_forecast_for_site(site.id, "3hourly")

@@ -6,12 +6,26 @@ import Weather from './components/Weather.vue'
 
 export default defineComponent({
   name: 'App',
-  components: {
-    Clock,
-    Calendar,
-    Weather,
-  }
-  });
+    data() {
+        return {
+            // 'metoffice_key': null,
+            // 'metoffice_lat': null,
+            metoffice: {
+                key: import.meta.env.VITE_APIKEY
+            }
+        }
+    },
+    components: {
+        Clock,
+        Calendar,
+        Weather,
+    },
+    mounted() {
+        // this.metoffice_key = import.meta.VITE_APIKEY;
+        console.log("mounted");
+        // console.log(this.);
+    }
+});
 </script>
 
 
@@ -21,5 +35,5 @@ export default defineComponent({
 <template>
   <Clock />
   <Calendar />
-  <Weather />
+  <Weather v-bind:config="metoffice"/>
 </template>
