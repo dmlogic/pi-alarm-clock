@@ -1,0 +1,39 @@
+{
+  "name": "alarm-clock-js",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "test": "npm run test:unit:javascript",
+    "test:unit:javascript": "jest --config=jest.config.js src"
+  },
+  "dependencies": {
+    "datapoint-js": "^0.2.1",
+    "ordinal": "^1.0.3",
+    "vue": "^3.2.6"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.14.7",
+    "@vitejs/plugin-vue": "^1.6.1",
+    "@vue/compiler-sfc": "^3.2.6",
+    "@vue/test-utils": "2.0.0-rc.6",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "vite": "^2.5.4",
+    "vue-jest": "^5.0.0-alpha.10"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  }
+}
