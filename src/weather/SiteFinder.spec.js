@@ -13,10 +13,5 @@ describe('SiteFinder', () => {
         expect(site.id).toBe("354160")
         expect(site.name).toBe("Westminster");
     });
-    it('has nowhere else to go ', () => {
-
-        let thing = 'http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/?' + new URLSearchParams({foo:"fum"});
-        console.log(thing);
-    });
 
 });

@@ -3,11 +3,11 @@ import SiteFinder from "./SiteFinder"
 class HttpTransport {
 
     constructor(apiKey, latitude, longitude) {
-        this.apiKey = apiKey  
+        this.apiKey = apiKey
         this.siteId = this.lookupSiteId(latitude, longitude)
     }
 
-    
+
     lookupSiteId(latitude, longitude) {
 
         const sourceData = this.performApiCall('sitelist');
@@ -16,14 +16,13 @@ class HttpTransport {
         return finder.getNearestSite(latitude,longitude).id;
     }
 
-    minmax() {
-        
-        console.log("I am a forecast");
-        console.log(this.transport);
+
+    getDailyData() {
+        return response = this.performApiCall(this.siteId, {res:"daily"});
     }
 
-    forecast() {
-        // val/wxfcs/all/datatype/locationId
+    getHourlyData() {
+        return response = this.performApiCall(this.siteId, {res:"3hourly"});
     }
 
     makeUrl(path, params) {
@@ -31,22 +30,21 @@ class HttpTransport {
             params = {}
         }
         params.key = this.apiKey;
-                
+
         return 'http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/'+path+'/'+ new URLSearchParams(params);
     }
 
 
     performApiCall(path, params) {
         try {
-            
+
             var xhr = new XMLHttpRequest();
             xhr.open('GET', this.makeUrl(path, params), false);
-                console.log("about to send");
             xhr.send();
-    
-    
+
+
             if (xhr.readyState == 4 && xhr.status == 200) {
-                return JSON.parse(xhr.responseText);            
+                return JSON.parse(xhr.responseText);
             } else if (xhr.status <= 599 && xhr.status >= 403) {
                 throw "AUTH_ERROR";
             } else if (xhr.status <= 599 && xhr.status >= 400) {
@@ -56,7 +54,7 @@ class HttpTransport {
             }
         } catch (e) {
             throw "NETWORK_ERROR";
-            
+
         }
 
     }

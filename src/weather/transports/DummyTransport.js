@@ -1,13 +1,28 @@
 class DummyTransport {
 
-    constructor(siteId) {
-        this.siteId = siteId  
+    constructor(siteId, payload) {
+        this.siteId = siteId;
+        this.payload = payload;
     }
 
-    
-    
-    getForecast() {
-        // val/wxfcs/all/datatype/locationId
+    lookupSiteId() {
+        return this.siteId;
+    }
+
+    getDailyData() {
+        return this.getMockedData()
+    }
+
+    getHourlyData() {
+        return this.getMockedData()
+    }
+
+
+    getMockedData() {
+        if(typeof this.payload !== "string") {
+            return {};
+        }
+        return JSON.parse(this.payload);
     }
 
 }
