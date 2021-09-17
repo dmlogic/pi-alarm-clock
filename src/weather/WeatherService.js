@@ -7,11 +7,11 @@ class WeatherService {
     RAIN_PROBABILITY_TOKEN = "Pp";
     MAX_UV_TOKEN = "U";
 
-    constructor(transport) {
+    returnedForecast = [];
 
+    constructor(transport) {
         this.transport = transport;
         this.siteId = this.transport.lookupSiteId();
-
     }
 
 
@@ -35,32 +35,68 @@ class WeatherService {
 
     /**
      * We want an array of 8 blocks of weather summary
-     * These are "now" and the next 7 blocks
+     * These are the remaining blocks for today plus
+     * however many we need from tomorrow
      * Each block providers:
+     * - Time
      * - Weather type
      * - Temperature
      * - Rain probability
      * - Max UV
      *
+     * This completely relies on the client timezone
+     * matching that for the Metoffice
+     *
      * @var Date timeNow
      */
     forecast(timeNow) {
-        const sourceData = this.transport.getHourlyData();
-        let returnedForecast = [];
+        const response = this.transport.getHourlyData();
+        const sourceData = response.SiteRep.DV.Location;
 
-        // First we need to know what "now" means
-        // should be 0|3|6|9|12|15|18|21
-        // An hour can be turned into one of these via
-        // Math.floor(hour/3)
+        this.returnedForecast = [];
+        let blockHour = this.blockTimeFromHour(
+            timeNow.getHours()
+        );
 
-        // We'll always want the first index for "now"
-        // Then we iterate through the remainder of the day
-        // If we reach the end of the day, and don't have 8,
-        // start again at tomorrow until we do
+        // Pick up the remaining blocks for today
+        let todayData = sourceData.Period[0].Rep;
+        this.processForcastDay(todayData, blockHour, todayData.length);
+
+        if(this.returnedForecast.length >= 8) {
+            return this.returnedForecast;
+        }
+
+        let remainingBlocks = 8 - this.returnedForecast.length;
+        let tomorrowData = sourceData.Period[1].Rep;
+        this.processForcastDay(tomorrowData, 0, remainingBlocks);
+
+
+        return this.returnedForecast;
     }
 
-    timeBlockFromHour(hour) {
+    processForcastDay(sourceData, blockHour, requiredBlocks) {
 
+        for (let index = 0; index < requiredBlocks; index++) {
+            this.returnedForecast.push(
+                this.parseTimeBlock( sourceData[index], blockHour )
+            );
+            blockHour += 3;
+        }
+    }
+
+    parseTimeBlock(block, hour) {
+
+        return {
+            'time': hour,
+            'type' : block[this.WEATHER_TYPE_TOKEN],
+            'temperature' : block[this.TEMPERATURE_TOKEN],
+            'rain' : block[this.RAIN_PROBABILITY_TOKEN],
+            'uv' : block[this.MAX_UV_TOKEN],
+        };
+    }
+
+    blockTimeFromHour(hour) {
+        return Math.floor(hour/3) * 3;
     }
 
 }

@@ -6,7 +6,7 @@ Ability to set of alarm time and play of sound through a connected speaker will 
 
 ## Time and date
 
-These pick up from the RasPi itself. It is assumed that the PI is set to the appropriate UK timezone to work with MetOffice
+These pick up from the RasPi itself. It is assumed that the PI is set to the appropriate UK timezone to work with MetOffice.
 
 ## Weather
 
