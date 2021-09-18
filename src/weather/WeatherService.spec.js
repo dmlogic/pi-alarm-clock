@@ -138,6 +138,18 @@ describe('WeatherService', () => {
     });
 
     it('responds gracefully if data is present but an unexpected format', () => {
+
+        const mockData = mockHourlyForecast();
+        // let's kill block 2
+        mockData.data.SiteRep.DV.Location.Period {
+            what: "a mess"
+        };
+        const service = makeWeatherService(mockData.data)
+        const outcome = service.forecast(
+            moment().set('hour', 0).toDate()
+        );
+
+        console.log(outcome);
     });
 
     it('includes expected events in the forecast', () => {
