@@ -8,6 +8,7 @@ class WeatherService {
     MAX_UV_TOKEN = "U";
 
     returnedForecast = [];
+    returnedEvents = {};
 
     constructor(transport) {
         this.transport = transport;
@@ -49,37 +50,78 @@ class WeatherService {
      * @var Date timeNow
      */
     forecast(timeNow) {
+        this.resetFoecast();
         const response = this.transport.getHourlyData();
-        const sourceData = response.SiteRep.DV.Location;
+        let sourceData;
+        try {
+            sourceData = response.SiteRep.DV.Location;
 
-        this.returnedForecast = [];
-        let blockHour = this.blockTimeFromHour(
-            timeNow.getHours()
-        );
+            let blockHour = this.blockTimeFromHour(
+                timeNow.getHours()
+            );
 
-        // Pick up the remaining blocks for today
-        let todayData = sourceData.Period[0].Rep;
-        this.processForcastDay(todayData, blockHour, todayData.length);
+            // Pick up the remaining blocks for today
+            let todayData = sourceData.Period[0].Rep;
+            this.processForcastDay(todayData, blockHour, todayData.length);
 
-        if(this.returnedForecast.length >= 8) {
-            return this.returnedForecast;
+        } catch (e) {
+            return null;
         }
 
-        let remainingBlocks = 8 - this.returnedForecast.length;
-        let tomorrowData = sourceData.Period[1].Rep;
-        this.processForcastDay(tomorrowData, 0, remainingBlocks);
+
+        if(this.returnedForecast.length < 8) {
+            let remainingBlocks = 8 - this.returnedForecast.length;
+            let tomorrowData = sourceData.Period[1].Rep;
+            this.processForcastDay(tomorrowData, 0, remainingBlocks);
+        }
 
 
-        return this.returnedForecast;
+        return {
+            forecast: this.returnedForecast,
+            warnings: this.returnedWarnings
+        }
+    }
+
+    resetFoecast() {
+        this.returnedForecast = [];
+        this.returnedWarnings = {
+            applySunscreen: false,
+            dressForRain: false,
+            dressForCold: false,
+        }
     }
 
     processForcastDay(sourceData, blockHour, requiredBlocks) {
 
         for (let index = 0; index < requiredBlocks; index++) {
-            this.returnedForecast.push(
-                this.parseTimeBlock( sourceData[index], blockHour )
-            );
+            let parsedBlock = this.parseTimeBlock( sourceData[index], blockHour );
+            this.returnedForecast.push( parsedBlock  );
+            this.checkForWarnings( parsedBlock, blockHour );
             blockHour += 3;
+        }
+    }
+
+    /**
+     * We want to update weather event warnings, but
+     * only during the daytime. We will take that to mean
+     * between the 9 and 15 time blocks
+     */
+    checkForWarnings(data, blockHour) {
+
+        if(blockHour < 9 || blockHour > 15) {
+            return;
+        }
+
+        if(data.uv && data.uv > 5) {
+            this.returnedWarnings.applySunscreen = true;
+        }
+
+        if(data.rain && data.rain > 30) {
+            this.returnedWarnings.dressForRain = true;
+        }
+
+        if(data.temperature && data.temperature < 5) {
+            this.returnedWarnings.dressForCold = true;
         }
     }
 
