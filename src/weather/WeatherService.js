@@ -87,15 +87,32 @@ class WeatherService {
 
         return {
             'time': hour,
-            'type' : parseInt(block[this.WEATHER_TYPE_TOKEN]),
-            'temperature' : parseInt(block[this.TEMPERATURE_TOKEN]),
-            'rain' : parseInt(block[this.RAIN_PROBABILITY_TOKEN]),
-            'uv' : parseInt(block[this.MAX_UV_TOKEN]),
+            'type' : this.valueFromToken(block, this.WEATHER_TYPE_TOKEN),
+            'temperature' : this.valueFromToken(block, this.TEMPERATURE_TOKEN),
+            'rain' : this.valueFromToken(block, this.RAIN_PROBABILITY_TOKEN),
+            'uv' : this.valueFromToken(block, this.MAX_UV_TOKEN),
         };
     }
 
+    /**
+     * Block hours are one of
+     * 0|3|6|9|12|15|18|21
+     * @returns integer
+     */
     blockTimeFromHour(hour) {
         return Math.floor(hour/3) * 3;
+    }
+
+    valueFromToken(block, token) {
+        if(!block || typeof block !== 'object') {
+            return null;
+        }
+
+        if(typeof block[token] === 'undefined') {
+            return null;
+        }
+
+        return parseInt(block[token]);
     }
 
 }

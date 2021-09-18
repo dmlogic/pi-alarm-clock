@@ -68,7 +68,7 @@ describe('WeatherService', () => {
         expect(blockTwo.uv).toBe(mockData.mocks.today[1].uv)
     });
 
-    it  ('uses the whole day if time now is in the first block', () => {
+    it ('uses the whole day if time now is in the first block', () => {
         const mockData = mockHourlyForecast();
         const service = makeWeatherService(mockData.data);
         const outcome = service.forecast(
@@ -76,11 +76,13 @@ describe('WeatherService', () => {
         );
         // Let's check all metrics. The chance of the faker giving a
         // false positive on all that is vanishingly small
+        expect(outcome[0].time).toBe(0)
         expect(outcome[0].type).toBe(mockData.mocks.today[0].type)
         expect(outcome[0].temperature).toBe(mockData.mocks.today[0].temperature)
         expect(outcome[0].rain).toBe(mockData.mocks.today[0].rain)
         expect(outcome[0].uv).toBe(mockData.mocks.today[0].uv)
 
+        expect(outcome[7].time).toBe(21)
         expect(outcome[7].type).toBe(mockData.mocks.today[7].type)
         expect(outcome[7].temperature).toBe(mockData.mocks.today[7].temperature)
         expect(outcome[7].rain).toBe(mockData.mocks.today[7].rain)
@@ -94,21 +96,51 @@ describe('WeatherService', () => {
         const outcome = service.forecast(
             moment().set('hour', 13).toDate()
         );
+        expect(outcome[0].time).toBe(12)
         expect(outcome[0].type).toBe(mockData.mocks.today[0].type)
         expect(outcome[0].temperature).toBe(mockData.mocks.today[0].temperature)
         expect(outcome[0].rain).toBe(mockData.mocks.today[0].rain)
         expect(outcome[0].uv).toBe(mockData.mocks.today[0].uv)
+        expect(outcome[3].time).toBe(21)
 
+        expect(outcome[4].time).toBe(0)
+        expect(outcome[7].time).toBe(9)
         expect(outcome[7].type).toBe(mockData.mocks.tomorrow[3].type)
         expect(outcome[7].temperature).toBe(mockData.mocks.tomorrow[3].temperature)
         expect(outcome[7].rain).toBe(mockData.mocks.tomorrow[3].rain)
         expect(outcome[7].uv).toBe(mockData.mocks.tomorrow[3].uv)
     });
 
-    it('fills in any gaps if data missing', () => {
+    it ('fills in any gaps if data missing', () => {
+        const mockData = mockHourlyForecast(4);
+        // let's kill blocks 2 and 3
+        mockData.data.SiteRep.DV.Location.Period[0].Rep[2] = null;
+        mockData.data.SiteRep.DV.Location.Period[0].Rep[3] = null;
+        const service = makeWeatherService(mockData.data)
+        const outcome = service.forecast(
+            moment().set('hour', 13).toDate()
+        );
+
+        expect(outcome[0].time).toBe(12)
+        expect(outcome[0].type).toBe(mockData.mocks.today[0].type)
+
+        expect(outcome[2].time).toBe(18)
+        expect(outcome[2].type).toBeNull()
+        expect(outcome[2].temperature).toBeNull()
+        expect(outcome[2].rain).toBeNull()
+        expect(outcome[2].uv).toBeNull()
+
+        expect(outcome[3].time).toBe(21)
+        expect(outcome[3].type).toBeNull()
+
+        expect(outcome[4].time).toBe(0)
+        expect(outcome[4].type).toBe(mockData.mocks.tomorrow[0].type)
     });
 
     it('responds gracefully if data is present but an unexpected format', () => {
+    });
+
+    it('includes expected events in the forecast', () => {
     });
 
 
