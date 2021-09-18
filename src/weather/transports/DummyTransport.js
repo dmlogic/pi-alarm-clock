@@ -1,11 +1,19 @@
 class DummyTransport {
 
+    expectedError = null;
+
     constructor(siteId, payload) {
         this.siteId = siteId;
         this.payload = payload;
     }
 
+    expectError(message) {
+        this.expectedError = message;
+    }
+
+
     lookupSiteId() {
+        this.checkForError();
         return this.siteId;
     }
 
@@ -19,12 +27,18 @@ class DummyTransport {
 
 
     getMockedData() {
-        if(typeof this.payload !== "string") {
+        this.checkForError();
+        if(typeof this.payload !== "object") {
             return {};
         }
-        return JSON.parse(this.payload);
+        return this.payload;
     }
 
+    checkForError() {
+        if(this.expectedError) {
+            throw this.expectedError
+        }
+    }
 }
 
 module.exports = DummyTransport

@@ -11,7 +11,6 @@ class WeatherService {
 
     constructor(transport) {
         this.transport = transport;
-        this.siteId = this.transport.lookupSiteId();
     }
 
 
@@ -88,10 +87,10 @@ class WeatherService {
 
         return {
             'time': hour,
-            'type' : block[this.WEATHER_TYPE_TOKEN],
-            'temperature' : block[this.TEMPERATURE_TOKEN],
-            'rain' : block[this.RAIN_PROBABILITY_TOKEN],
-            'uv' : block[this.MAX_UV_TOKEN],
+            'type' : parseInt(block[this.WEATHER_TYPE_TOKEN]),
+            'temperature' : parseInt(block[this.TEMPERATURE_TOKEN]),
+            'rain' : parseInt(block[this.RAIN_PROBABILITY_TOKEN]),
+            'uv' : parseInt(block[this.MAX_UV_TOKEN]),
         };
     }
 

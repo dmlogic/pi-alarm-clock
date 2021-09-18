@@ -1,59 +1,129 @@
 import DummyTransport from "./transports/DummyTransport.js";
 import WeatherService from "./WeatherService.js"
+import {mockDailyForecast, mockHourlyForecast} from "../../tests/metoffice_mocks.js"
 import fs from "fs"
 import { time } from "console";
+import {datatype} from 'faker/locale/en_GB'
+const moment = require("moment")
 
 describe('WeatherService', () => {
 
-    it ('responds to a network exception for site lookup', () => {
+    it ('throws expected error for temperature check', () => {
+        const service = makeWeatherService({}, "AUTH_ERROR");
+
+        expect(() => {
+            service.minMaxTemperatures()
+        }).toThrow("AUTH_ERROR");
+
     });
 
-    it ('responds to a network exception for forecast', () => {
+    it ('throws expected error for forecast check', () => {
+        const service = makeWeatherService({}, "NETWORK_ERROR");
+
+        expect(() => {
+            service.forecast( new Date )
+        }).toThrow("NETWORK_ERROR");
     });
 
-    it ('gets a site id from supplied transport', () => {
 
-        const transport = new DummyTransport(1234);
-        const service = new WeatherService(transport);
-
-        expect(service.siteId).toEqual(transport.siteId);
-    });
-
-    it('cannot get temperature without data', () => {
-        const service = new WeatherService(
-            new DummyTransport(0)
-        );
+    it ('cannot get temperature without data', () => {
+        const service = makeWeatherService({});
         expect(service.minMaxTemperatures()).toBe(null)
     });
 
-    it('gets a min and max temperature for the day', () => {
-        const transport = new DummyTransport(
-            1234,
-            fs.readFileSync('tests/daily_forecast.json', 'utf8')
-        );
-        const service = new WeatherService(transport);
-        expect(service.minMaxTemperatures()).toEqual({ low: 13, high: 20 })
+    it ('gets a min and max temperature for the day', () => {
+        const mockData = mockDailyForecast();
+        const service = makeWeatherService(mockData.data);
+        expect(service.minMaxTemperatures()).toEqual({
+            low: mockData.mocks.low,
+            high: mockData.mocks.high
+        })
 
     })
 
-    it('gets a block of eight objects for a forecast', () => {
-        const transport = new DummyTransport(
-            1234,
-            fs.readFileSync('tests/three_hourly_forecast.json', 'utf8')
+    it ('gets a block of eight objects for a forecast', () => {
+        const mockData = mockHourlyForecast(4);
+        const service = makeWeatherService(mockData.data)
+        const outcome = service.forecast(
+            moment().set('hour', 13).toDate()
         );
-        const service = new WeatherService(transport);
-        // There are 4 reps left in our sample data,
-        // so let's say it's 13:00 now
-        const timeNow = new Date('August 19, 1975 13:14:15');
-        const outcome = service.forecast(timeNow);
         expect(outcome.length).toEqual(8);
+        expect(typeof outcome[0]).toBe('object')
     });
 
-    it('uses the whole day if time now is in the first block', () => {
+
+    it ('formats a time block as expected', () => {
+        const mockData = mockHourlyForecast(4);
+        const service = makeWeatherService(mockData.data)
+        const outcome = service.forecast(
+            moment().set('hour', 13).toDate()
+        );
+        const blockTwo = outcome[1];
+
+        // We assert on the second block, just because
+        expect(blockTwo.time).toBe(15)
+        expect(blockTwo.type).toBe(mockData.mocks.today[1].type)
+        expect(blockTwo.temperature).toBe(mockData.mocks.today[1].temperature)
+        expect(blockTwo.rain).toBe(mockData.mocks.today[1].rain)
+        expect(blockTwo.uv).toBe(mockData.mocks.today[1].uv)
     });
 
-    it('spreads into tomorrow if the time now is later in the day', () => {
+    it  ('uses the whole day if time now is in the first block', () => {
+        const mockData = mockHourlyForecast();
+        const service = makeWeatherService(mockData.data);
+        const outcome = service.forecast(
+            moment().set('hour', 1).toDate()
+        );
+        // Let's check all metrics. The chance of the faker giving a
+        // false positive on all that is vanishingly small
+        expect(outcome[0].type).toBe(mockData.mocks.today[0].type)
+        expect(outcome[0].temperature).toBe(mockData.mocks.today[0].temperature)
+        expect(outcome[0].rain).toBe(mockData.mocks.today[0].rain)
+        expect(outcome[0].uv).toBe(mockData.mocks.today[0].uv)
+
+        expect(outcome[7].type).toBe(mockData.mocks.today[7].type)
+        expect(outcome[7].temperature).toBe(mockData.mocks.today[7].temperature)
+        expect(outcome[7].rain).toBe(mockData.mocks.today[7].rain)
+        expect(outcome[7].uv).toBe(mockData.mocks.today[7].uv)
+
     });
+
+    it ('spreads into tomorrow if the time now is later in the day', () => {
+        const mockData = mockHourlyForecast(4);
+        const service = makeWeatherService(mockData.data)
+        const outcome = service.forecast(
+            moment().set('hour', 13).toDate()
+        );
+        expect(outcome[0].type).toBe(mockData.mocks.today[0].type)
+        expect(outcome[0].temperature).toBe(mockData.mocks.today[0].temperature)
+        expect(outcome[0].rain).toBe(mockData.mocks.today[0].rain)
+        expect(outcome[0].uv).toBe(mockData.mocks.today[0].uv)
+
+        expect(outcome[7].type).toBe(mockData.mocks.tomorrow[3].type)
+        expect(outcome[7].temperature).toBe(mockData.mocks.tomorrow[3].temperature)
+        expect(outcome[7].rain).toBe(mockData.mocks.tomorrow[3].rain)
+        expect(outcome[7].uv).toBe(mockData.mocks.tomorrow[3].uv)
+    });
+
+    it('fills in any gaps if data missing', () => {
+    });
+
+    it('responds gracefully if data is present but an unexpected format', () => {
+    });
+
 
 
 });
+
+let makeWeatherService = function(withData, withException) {
+    if(typeof withData !== 'object') {
+        withData = MetOffice.mockWeeklyForecast();
+    }
+
+    const transport = new DummyTransport( datatype.number(), withData );
+
+    if(typeof withException === 'string') {
+        transport.expectError(withException)
+    }
+    return new WeatherService(transport);
+}
