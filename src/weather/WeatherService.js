@@ -1,4 +1,4 @@
-class WeatherService {
+export default class WeatherService {
 
     NIGHT_MINIMUM_TOKEN = "Nm";
     DAY_MINIMUM_TOKEN = "Dm";
@@ -158,5 +158,3 @@ class WeatherService {
     }
 
 }
-
-module.exports = WeatherService

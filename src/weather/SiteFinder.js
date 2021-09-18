@@ -1,14 +1,14 @@
-class SiteFinder {
-    
+export default class SiteFinder {
+
     constructor(dataPayload){
-        this.sites = JSON.parse(dataPayload);
+        this.sites = dataPayload;
 
     }
 
     getNearestSite(lat, lng) {
         var nearest = 0;
         var distance = false;
-  
+
         for(var i = 0; i < this.sites.length; i++) {
             var new_distance = this.measureDistance(
                 parseFloat(this.sites[i].longitude),
@@ -16,7 +16,7 @@ class SiteFinder {
                 parseFloat(lng),
                 parseFloat(lat)
                 );
-                
+
             if (distance == false || new_distance < distance){
                 distance = new_distance;
                 nearest = i;
@@ -31,7 +31,5 @@ class SiteFinder {
         var distance = Math.abs(lon1-lon2) + Math.abs(lat1-lat2);
         return distance;
     }
-  
-}
 
-module.exports = SiteFinder
+}

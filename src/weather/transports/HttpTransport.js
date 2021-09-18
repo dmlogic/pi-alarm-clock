@@ -1,6 +1,6 @@
-import SiteFinder from "./SiteFinder"
+import SiteFinder from "../SiteFinder"
 
-class HttpTransport {
+export default class HttpTransport {
 
     constructor(apiKey, latitude, longitude) {
         this.apiKey = apiKey
@@ -12,7 +12,7 @@ class HttpTransport {
 
         const sourceData = this.performApiCall('sitelist');
 
-        let finder = new SiteFinder(sourceData)
+        let finder = new SiteFinder(sourceData.Locations.Location);
         return finder.getNearestSite(latitude,longitude).id;
     }
 
@@ -31,7 +31,7 @@ class HttpTransport {
         }
         params.key = this.apiKey;
 
-        return 'http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/'+path+'/'+ new URLSearchParams(params);
+        return 'http://datapoint.metoffice.gov.uk/public/data/val/wxfcs/all/json/'+path+'/?'+ new URLSearchParams(params);
     }
 
 
@@ -60,5 +60,3 @@ class HttpTransport {
     }
 
 }
-
-module.exports = HttpTransport

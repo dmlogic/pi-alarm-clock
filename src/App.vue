@@ -4,14 +4,20 @@ import Clock from './components/Clock.vue'
 import Calendar from './components/Calendar.vue'
 import Weather from './components/Weather.vue'
 
+import HttpTransport from "./weather/transports/HttpTransport.js";
+import WeatherService from "./weather/WeatherService.js"
+
 export default defineComponent({
   name: 'App',
     data() {
         return {
-            metoffice: {
-                key: import.meta.env.VITE_APIKEY,
-                lat: import.meta.env.VITE_LAT,
-                lng: import.meta.env.VITE_LNG
+            weatherService() {
+                const transport = new HttpTransport(
+                    import.meta.env.VITE_APIKEY,
+                    import.meta.env.VITE_LAT,
+                    import.meta.env.VITE_LNG
+                );
+                return new WeatherService(transport);
             }
         }
     },
@@ -30,5 +36,5 @@ export default defineComponent({
 <template>
   <Clock />
   <Calendar />
-  <Weather v-bind:config="metoffice"/>
+  <Weather v-bind:api="weatherService()"/>
 </template>
