@@ -7,7 +7,26 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
+[class^="warning"] {
+    box-sizing: border-box;
+    display:inline-block;
+    width:123px;
+    height: 125px;
+    overflow:hidden;
+    background-repeat: no-repeat;
+    padding-top:125px;
+    background-size: contain;
+}
+.warning-rain {
+    background-image: url(umbrella.svg);
+}
+.warning-cold {
+    background-image: url(hat.svg);
+}
+.warning-uv {
+    background-image: url(sunscreen.svg);
+}
 </style>
 
 <template>

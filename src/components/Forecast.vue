@@ -83,7 +83,7 @@ export default defineComponent({
             if(typeof this.src.type === 'undefined') {
                 return '';
             }
-            return `<img src="/weather_icons/${this.src.type}.png">`;
+            return `<img src="/weather_icons/${this.src.type}.svg">`;
 
         },
         tempColour() {
