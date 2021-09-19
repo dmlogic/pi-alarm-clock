@@ -1,6 +1,7 @@
-
 <script>
 import { defineComponent } from 'vue';
+import { padTime } from '../functions.js';
+
 export default defineComponent({
     data() {
         return {
@@ -14,9 +15,9 @@ export default defineComponent({
             let now = new Date,
                 seconds = now.getSeconds(),
                 minutes = now.getMinutes();
-            this.hours   = this.padZero( now.getHours().toString() )
-            this.minutes = this.padZero( minutes.toString() )
-            this.seconds = this.padZero( seconds.toString() )
+            this.hours   = padTime( now.getHours().toString() )
+            this.minutes = padTime( minutes.toString() )
+            this.seconds = padTime( seconds.toString() )
 
             if(seconds === 0) {
                 if(minutes === 0) {
@@ -25,9 +26,6 @@ export default defineComponent({
                 }
                 this.$emit('minute');
             }
-        },
-        padZero(str) {
-            return str.padStart(2, '0')
         }
     },
     mounted() {

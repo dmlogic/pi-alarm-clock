@@ -1,5 +1,5 @@
 import {datatype} from 'faker/locale/en_GB'
-import {blockTimeFromHour} from '../src/weather/functions.js'
+import {blockTimeFromHour} from '../src/functions.js'
 
 /**
  * These functions mock responses from Met Office Datapoint

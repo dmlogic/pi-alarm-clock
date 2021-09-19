@@ -1,4 +1,4 @@
-import {blockTimeFromHour} from './functions.js'
+import {blockTimeFromHour} from '../functions.js'
 
 export default class WeatherService {
 

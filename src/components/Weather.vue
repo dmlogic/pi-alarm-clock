@@ -2,6 +2,7 @@
 import Forecast from './Forecast.vue'
 import Warnings from './Warnings.vue'
 import { defineComponent } from 'vue';
+
 export default defineComponent({
     props: [
         'api'
@@ -66,14 +67,14 @@ export default defineComponent({
         </ul>
         <Warnings :data="warnings" />
         <ul class="weather-forecast">
-            <Forecast :data="forecast1" />
-            <Forecast :data="forecast2" />
-            <Forecast :data="forecast3" />
-            <Forecast :data="forecast4" />
-            <Forecast :data="forecast5" />
-            <Forecast :data="forecast6" />
-            <Forecast :data="forecast7" />
-            <Forecast :data="forecast8" />
+            <Forecast :src="forecast1" />
+            <Forecast :src="forecast2" />
+            <Forecast :src="forecast3" />
+            <Forecast :src="forecast4" />
+            <Forecast :src="forecast5" />
+            <Forecast :src="forecast6" />
+            <Forecast :src="forecast7" />
+            <Forecast :src="forecast8" />
         </ul>
     </div>
 </template>
