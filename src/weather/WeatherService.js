@@ -1,3 +1,5 @@
+import {blockTimeFromHour} from './functions.js'
+
 export default class WeatherService {
 
     NIGHT_MINIMUM_TOKEN = "Nm";
@@ -47,21 +49,23 @@ export default class WeatherService {
      * This completely relies on the client timezone
      * matching that for the Metoffice
      *
-     * @var Date timeNow
+     * @var Int timeNow
      */
-    forecast(timeNow) {
-        this.resetFoecast();
+    forecast(hourNow) {
+
+
+        this.resetForecast();
         const response = this.transport.getHourlyData();
         let sourceData;
         try {
             sourceData = response.SiteRep.DV.Location;
 
-            let blockHour = this.blockTimeFromHour(
-                timeNow.getHours()
-            );
+            let blockHour = blockTimeFromHour( hourNow );
 
-            // Pick up the remaining blocks for today
-            let todayData = sourceData.Period[0].Rep;
+            let todayData = this.getRemainingForecastForToday(
+                    sourceData.Period[0].Rep,
+                    blockHour
+            ) ;
             this.processForcastDay(todayData, blockHour, todayData.length);
 
         } catch (e) {
@@ -82,7 +86,24 @@ export default class WeatherService {
         }
     }
 
-    resetFoecast() {
+    /**
+     * If the amount of blocks present are more than expected for
+     * the current hour, shift items off until we get the expected
+     * amount. This is simpler than time calcuations
+     */
+    getRemainingForecastForToday(todayData, blockHour) {
+
+        let expectedBlocks = 8 - blockHour / 3;
+        if(todayData.length > expectedBlocks) {
+            for (let index = todayData.length; index > expectedBlocks; index--) {
+                todayData.shift();
+            }
+        }
+        return todayData;
+
+    }
+
+    resetForecast() {
         this.returnedForecast = [];
         this.returnedWarnings = {
             applySunscreen: false,
@@ -134,15 +155,6 @@ export default class WeatherService {
             'rain' : this.valueFromToken(block, this.RAIN_PROBABILITY_TOKEN),
             'uv' : this.valueFromToken(block, this.MAX_UV_TOKEN),
         };
-    }
-
-    /**
-     * Block hours are one of
-     * 0|3|6|9|12|15|18|21
-     * @returns integer
-     */
-    blockTimeFromHour(hour) {
-        return Math.floor(hour/3) * 3;
     }
 
     valueFromToken(block, token) {

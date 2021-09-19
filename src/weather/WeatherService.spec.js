@@ -4,7 +4,9 @@ import {mockDailyForecast, mockHourlyForecast} from "../../tests/metoffice_mocks
 import fs from "fs"
 import { time } from "console";
 import {datatype} from 'faker/locale/en_GB'
-const moment = require("moment")
+
+const startOfDay = 1;
+const middleOfDay = 13;
 
 describe('WeatherService', () => {
 
@@ -21,7 +23,7 @@ describe('WeatherService', () => {
         const service = makeWeatherService({}, "NETWORK_ERROR");
 
         expect(() => {
-            service.forecast( new Date )
+            service.forecast( startOfDay )
         }).toThrow("NETWORK_ERROR");
     });
 
@@ -42,22 +44,29 @@ describe('WeatherService', () => {
     })
 
     it ('gets a block of eight objects for a forecast', () => {
-        const mockData = mockHourlyForecast(4);
+        const mockData = mockHourlyForecast(middleOfDay);
         const service = makeWeatherService(mockData.data)
-        const outcome = service.forecast(
-            moment().set('hour', 13).toDate()
-        );
+        const outcome = service.forecast( middleOfDay);
         expect(outcome.forecast.length).toEqual(8);
         expect(typeof outcome.forecast[0]).toBe('object')
     });
 
+    it ('strips the first rep from today if the data time is old', () => {
+
+        const mockData = mockHourlyForecast(11);
+        const service = makeWeatherService(mockData.data)
+        const outcome = service.forecast( 13 );
+        expect(outcome.forecast.length).toEqual(8);
+        expect(outcome.forecast[0].time).toEqual(12);
+        expect(outcome.forecast[3].time).toEqual(21);
+        expect(outcome.forecast[4].time).toEqual(0);
+    });
+
 
     it ('formats a time block as expected', () => {
-        const mockData = mockHourlyForecast(4);
+        const mockData = mockHourlyForecast(middleOfDay);
         const service = makeWeatherService(mockData.data)
-        const outcome = service.forecast(
-            moment().set('hour', 13).toDate()
-        );
+        const outcome = service.forecast( middleOfDay );
         const blockTwo = outcome.forecast[1];
 
         // We assert on the second block, just because
@@ -69,11 +78,9 @@ describe('WeatherService', () => {
     });
 
     it ('uses the whole day if time now is in the first block', () => {
-        const mockData = mockHourlyForecast();
-        const service = makeWeatherService(mockData.data);
-        const outcome = service.forecast(
-            moment().set('hour', 1).toDate()
-        );
+        const mockData = mockHourlyForecast( startOfDay );
+        const service = makeWeatherService( mockData.data );
+        const outcome = service.forecast( startOfDay );
         // Let's check all metrics. The chance of the faker giving a
         // false positive on all that is vanishingly small
         expect(outcome.forecast[0].time).toBe(0)
@@ -91,11 +98,9 @@ describe('WeatherService', () => {
     });
 
     it ('spreads into tomorrow if the time now is later in the day', () => {
-        const mockData = mockHourlyForecast(4);
+        const mockData = mockHourlyForecast(middleOfDay);
         const service = makeWeatherService(mockData.data)
-        const outcome = service.forecast(
-            moment().set('hour', 13).toDate()
-        );
+        const outcome = service.forecast( middleOfDay );
         expect(outcome.forecast[0].time).toBe(12)
         expect(outcome.forecast[0].type).toBe(mockData.mocks.today[0].type)
         expect(outcome.forecast[0].temperature).toBe(mockData.mocks.today[0].temperature)
@@ -112,14 +117,12 @@ describe('WeatherService', () => {
     });
 
     it ('fills in any gaps if data missing', () => {
-        const mockData = mockHourlyForecast(4);
+        const mockData = mockHourlyForecast(middleOfDay);
         // let's kill blocks 2 and 3
         mockData.data.SiteRep.DV.Location.Period[0].Rep[2] = null;
         mockData.data.SiteRep.DV.Location.Period[0].Rep[3] = null;
         const service = makeWeatherService(mockData.data)
-        const outcome = service.forecast(
-            moment().set('hour', 13).toDate()
-        );
+        const outcome = service.forecast( middleOfDay );
 
         expect(outcome.forecast[0].time).toBe(12)
         expect(outcome.forecast[0].type).toBe(mockData.mocks.today[0].type)
@@ -139,45 +142,39 @@ describe('WeatherService', () => {
 
     it ('responds gracefully if data is present but an unexpected format', () => {
 
-        const mockData1 = mockHourlyForecast();
+        const mockData1 = mockHourlyForecast(startOfDay);
         // let's kill block 2
         mockData1.data.SiteRep.DV.Location.Period  = {
             what: "a mess"
         };
         const service1 = makeWeatherService(mockData1.data)
-        const outcome1 = service1.forecast(
-            moment().set('hour', 0).toDate()
-        );
+        const outcome1 = service1.forecast(startOfDay);
         expect(outcome1).toBeNull();
 
-        const mockData2 = mockHourlyForecast();
+        const mockData2 = mockHourlyForecast(startOfDay);
         // let's kill block 2
         mockData2.data.SiteRep.DV.Location.Period[0].Rep[0]  = {
             what: "a mess"
         };
         const service2 = makeWeatherService(mockData2.data)
-        const outcome2 = service2.forecast(
-            moment().set('hour', 0).toDate()
-        );
+        const outcome2 = service2.forecast(startOfDay);
         expect(outcome2.forecast[0].time).toBe(0)
         expect(outcome2.forecast[0].type).toBeNull()
     });
 
     it ('warns about sunscreen when it should', () => {
 
-        let mockData = mockForWarnings('U',1);
+        let mockData = mockForWarnings('U',0, startOfDay);
 
         const service1 = makeWeatherService(mockData.data);
-        const outcome1 = service1.forecast(
-            moment().set('hour', 1).toDate()
-        );
+        const outcome1 = service1.forecast(startOfDay);
         expect(outcome1.warnings.applySunscreen).toBe(false);
 
         // A high UV in the night shouldn't trigger
         mockData.data.SiteRep.DV.Location.Period[0].Rep[0].U = 6
         const service2 = makeWeatherService(mockData.data);
         const outcome2 = service2.forecast(
-            moment().set('hour', 1).toDate()
+            startOfDay
         );
         expect(outcome2.warnings.applySunscreen).toBe(false);
 
@@ -186,7 +183,7 @@ describe('WeatherService', () => {
         mockData.data.SiteRep.DV.Location.Period[0].Rep[4].U = 6
         const service3 = makeWeatherService(mockData.data);
         const outcome3 = service3.forecast(
-            moment().set('hour', 1).toDate()
+            startOfDay
         );
         expect(outcome3.warnings.applySunscreen).toBe(true);
 
@@ -197,39 +194,32 @@ describe('WeatherService', () => {
 
     it ('warns about rain when it should', () => {
 
-        let mockData = mockForWarnings('Pp',1);
+        let mocl
+        let mockData = mockForWarnings('Pp',0, startOfDay);
 
         const service1 = makeWeatherService(mockData.data);
-        const outcome1 = service1.forecast(
-            moment().set('hour', 1).toDate()
-        );
+        const outcome1 = service1.forecast(startOfDay);
         expect(outcome1.warnings.dressForRain).toBe(false);
 
         mockData.data.SiteRep.DV.Location.Period[0].Rep[4].Pp = 80
 
         const service2 = makeWeatherService(mockData.data);
-        const outcome2 = service2.forecast(
-            moment().set('hour', 1).toDate()
-        );
+        const outcome2 = service2.forecast(startOfDay);
         expect(outcome2.warnings.dressForRain).toBe(true);
 
     });
 
     it ('warns about cold when it should', () => {
-        let mockData = mockForWarnings('T',22, 4);
+        let mockData = mockForWarnings('T',22, middleOfDay);
 
         const service1 = makeWeatherService(mockData.data);
-        const outcome1 = service1.forecast(
-            moment().set('hour', 13).toDate()
-        );
+        const outcome1 = service1.forecast( middleOfDay );
         expect(outcome1.warnings.dressForCold).toBe(false);
 
         mockData.data.SiteRep.DV.Location.Period[1].Rep[3].T = 4
 
         const service2 = makeWeatherService(mockData.data);
-        const outcome2 = service2.forecast(
-            moment().set('hour', 13).toDate()
-        );
+        const outcome2 = service2.forecast(middleOfDay);
         expect(outcome2.warnings.dressForCold).toBe(true);
     });
 
@@ -237,8 +227,8 @@ describe('WeatherService', () => {
 
 });
 
-const mockForWarnings = function(metric, value, blocksToday) {
-    const mockData = mockHourlyForecast(blocksToday);
+const mockForWarnings = function(metric, value, mockTime) {
+    const mockData = mockHourlyForecast(mockTime);
 
     for (let index = 0; index < mockData.data.SiteRep.DV.Location.Period[0].Rep.length; index++) {
         mockData.data.SiteRep.DV.Location.Period[0].Rep[index][metric] = value

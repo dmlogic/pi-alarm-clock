@@ -11,10 +11,20 @@ export default defineComponent({
     },
     methods: {
         updateClock() {
-            let now = new Date;
+            let now = new Date,
+                seconds = now.getSeconds(),
+                minutes = now.getMinutes();
             this.hours   = this.padZero( now.getHours().toString() )
-            this.minutes = this.padZero( now.getMinutes().toString() )
-            this.seconds = this.padZero( now.getSeconds().toString() )
+            this.minutes = this.padZero( minutes.toString() )
+            this.seconds = this.padZero( seconds.toString() )
+
+            if(seconds === 0) {
+                if(minutes === 0) {
+                    this.$emit('hour');
+                    return;
+                }
+                this.$emit('minute');
+            }
         },
         padZero(str) {
             return str.padStart(2, '0')

@@ -1,5 +1,5 @@
 import {datatype} from 'faker/locale/en_GB'
-const moment = require("moment")
+import {blockTimeFromHour} from '../src/weather/functions.js'
 
 /**
  * These functions mock responses from Met Office Datapoint
@@ -25,7 +25,6 @@ export function mockDailyForecast() {
                     Period: [
                         {
                             type: "Day",
-                            value: moment().format('YYYY-MM-DD')+'Z',
                             Rep: [
                                 {
                                 Dm: response.mocks.high,
@@ -44,7 +43,11 @@ export function mockDailyForecast() {
 
 }
 
-export function mockHourlyForecast(blocksToday) {
+export function mockHourlyForecast(dataHour) {
+
+    let blockHour = blockTimeFromHour( dataHour )
+    let blocksToday = 8 - blockHour / 3
+
     let response = {
         mocks: {
             today:[],
@@ -71,10 +74,6 @@ export function mockHourlyForecast(blocksToday) {
             }
 
         }
-    }
-
-    if(typeof blocksToday === 'undefined') {
-        blocksToday = 8;
     }
 
     for (let index = 0; index < blocksToday; index++) {

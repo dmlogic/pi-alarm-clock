@@ -21,6 +21,17 @@ export default defineComponent({
             }
         }
     },
+    methods: {
+        onNewMinute() {
+            console.log("a new minute");
+
+        },
+        onNewHour() {
+            console.log("a new hour");
+            this.$refs.weather.updateWeather();
+
+        }
+    },
     components: {
         Clock,
         Calendar,
@@ -34,7 +45,11 @@ export default defineComponent({
 </style>
 
 <template>
-  <Clock />
+  <Clock
+    @minute="onNewMinute"
+    @hour="onNewHour" />
   <Calendar />
-  <Weather v-bind:api="weatherService()"/>
+  <Weather
+    v-bind:api="weatherService()"
+    ref="weather" />
 </template>
