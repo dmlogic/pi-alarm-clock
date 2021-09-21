@@ -6,8 +6,8 @@ function sleep(milliseconds) {
 }
 
 describe('Weather', () => {
-  
-    it('does not shit its pants', async () => {
+
+    it('needs a change of approach to inject the data', async () => {
         const wrapper = mount(Weather,{
             propsData: {
                 config: {
@@ -17,7 +17,7 @@ describe('Weather', () => {
                 }
             }
         })
-        expect(1).toEqual(1)
-    })    
-    
+        expect(false).toEqual(true)
+    })
+
 })

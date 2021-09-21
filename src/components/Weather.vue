@@ -61,11 +61,14 @@ export default defineComponent({
 
 <template>
     <div class="weather">
+
         <ul class="weather-summary">
             <li>Min {{minTemp}}°</li>
             <li>Max {{maxTemp}}°</li>
         </ul>
+
         <Warnings :data="warnings" />
+
         <ul class="weather-forecast">
             <Forecast :src="forecast1" />
             <Forecast :src="forecast2" />
@@ -76,5 +79,6 @@ export default defineComponent({
             <Forecast :src="forecast7" />
             <Forecast :src="forecast8" />
         </ul>
+
     </div>
 </template>
