@@ -15,9 +15,9 @@ export default defineComponent({
             let now = new Date,
                 seconds = now.getSeconds(),
                 minutes = now.getMinutes();
-            this.hours   = padTime( now.getHours().toString() )
-            this.minutes = padTime( minutes.toString() )
-            this.seconds = padTime( seconds.toString() )
+            this.hours   = padTime( now.getHours() )
+            this.minutes = padTime( minutes )
+            this.seconds = padTime( seconds )
 
             if(seconds === 0) {
                 if(minutes === 0) {
