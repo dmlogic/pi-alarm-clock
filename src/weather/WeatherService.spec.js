@@ -143,7 +143,6 @@ describe('WeatherService', () => {
     it ('responds gracefully if data is present but an unexpected format', () => {
 
         const mockData1 = mockHourlyForecast(startOfDay);
-        // let's kill block 2
         mockData1.data.SiteRep.DV.Location.Period  = {
             what: "a mess"
         };
@@ -152,7 +151,6 @@ describe('WeatherService', () => {
         expect(outcome1).toBeNull();
 
         const mockData2 = mockHourlyForecast(startOfDay);
-        // let's kill block 2
         mockData2.data.SiteRep.DV.Location.Period[0].Rep[0]  = {
             what: "a mess"
         };
@@ -186,10 +184,6 @@ describe('WeatherService', () => {
             startOfDay
         );
         expect(outcome3.warnings.applySunscreen).toBe(true);
-
-
-        // const outcome2 = ?arnings.applySunscreen).toBe(true);
-
     });
 
     it ('warns about rain when it should', () => {
