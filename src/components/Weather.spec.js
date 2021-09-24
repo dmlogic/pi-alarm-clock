@@ -36,5 +36,4 @@ describe('Weather', () => {
     it ('displays expected number of forecast blocks', () => {
     })
 
-
 })

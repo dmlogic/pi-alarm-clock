@@ -6,7 +6,7 @@ function sleep(milliseconds) {
 }
 
 describe('Clock', () => {
-  
+
     it('should display the time', async () => {
         const wrapper = mount(Clock)
 
@@ -15,8 +15,8 @@ describe('Clock', () => {
         expect(els.length).toEqual(3)
         expect(els[0].text()).toEqual( now.getHours().toString().padStart(2, '0'))
         expect(els[1].text()).toEqual( now.getMinutes().toString().padStart(2, '0'))
-    })    
-    
+    })
+
     it('increments time each second', async () => {
       const wrapper = mount(Clock)
       await wrapper.find('.clock');

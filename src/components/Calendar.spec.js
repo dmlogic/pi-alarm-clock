@@ -3,11 +3,9 @@ import Calendar from './Calendar.vue';
 import ordinal from "ordinal"
 
 describe('Calendar', () => {
-  
 
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-
 
     it('displays the date in expected format', async () => {
         const wrapper = mount(Calendar)
@@ -23,6 +21,6 @@ describe('Calendar', () => {
         expect(date).toBe(ordinal(now.getDate()))
         expect(month).toBe(months[now.getMonth()])
         expect(year).toBe(now.getFullYear().toString())
-    })    
-    
+    })
+
 })
