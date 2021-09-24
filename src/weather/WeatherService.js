@@ -53,7 +53,6 @@ export default class WeatherService {
      */
     forecast(hourNow) {
 
-
         this.resetForecast();
         const response = this.transport.getHourlyData();
         let sourceData;

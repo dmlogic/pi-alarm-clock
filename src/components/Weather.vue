@@ -4,15 +4,15 @@ import Warnings from './Warnings.vue'
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    props: [
-        'api'
-    ],
+    props: {
+        'authError': false,
+        'networkError': false,
+    },
     data() {
         return {
-            authError: false,
-            networkError: false,
             minTemp: null,
             maxTemp:null,
+            warnings: {},
             forecast1:{},
             forecast2:{},
             forecast3:{},
@@ -21,32 +21,32 @@ export default defineComponent({
             forecast6:{},
             forecast7:{},
             forecast8:{},
-            warnings: {},
         }
     },
     methods: {
-        updateWeather() {
-            const summary = this.api.minMaxTemperatures();
-            const currentTime = new Date;
+        updateSummary(summary) {
             this.minTemp = summary.low
             this.maxTemp = summary.high
-
-            const response = this.api.forecast( currentTime.getHours() );
-            this.forecast1 = response.forecast[0];
-            this.forecast2 = response.forecast[1];
-            this.forecast3 = response.forecast[2];
-            this.forecast4 = response.forecast[3];
-            this.forecast5 = response.forecast[4];
-            this.forecast6 = response.forecast[5];
-            this.forecast7 = response.forecast[6];
-            this.forecast8 = response.forecast[7];
-            this.warnings = response.warnings;
-
-            this.api.transport.siteId = null;
+        },
+        updateForecast(data) {
+            this.warnings = data.warnings;
+            this.forecast1 = data.forecast[0];
+            this.forecast2 = data.forecast[1];
+            this.forecast3 = data.forecast[2];
+            this.forecast4 = data.forecast[3];
+            this.forecast5 = data.forecast[4];
+            this.forecast6 = data.forecast[5];
+            this.forecast7 = data.forecast[6];
+            this.forecast8 = data.forecast[7];
         }
     },
-    mounted() {
-        this.updateWeather();
+    computed: {
+        tempLow() {
+            return `Min ${this.minTemp}°`;
+        },
+        tempHigh() {
+            return `Max ${this.maxTemp}°`;
+        }
     },
     components: {
         Forecast,
@@ -60,11 +60,14 @@ export default defineComponent({
 </style>
 
 <template>
-    <div class="weather">
+    <div class="auth" v-if="authError">
+        Cannot collect weather data. Please check your api key and reboot
+    </div>
+    <div class="weather" v-if="!authError">
 
         <ul class="weather-summary">
-            <li>Min {{minTemp}}°</li>
-            <li>Max {{maxTemp}}°</li>
+            <li>{{tempLow}}</li>
+            <li>{{tempHigh}}</li>
         </ul>
 
         <Warnings :data="warnings" />

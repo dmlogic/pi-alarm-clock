@@ -11,26 +11,71 @@ export default defineComponent({
   name: 'App',
     data() {
         return {
-            weatherService() {
-                const transport = new HttpTransport(
-                    import.meta.env.VITE_APIKEY,
-                    import.meta.env.VITE_LAT,
-                    import.meta.env.VITE_LNG
-                );
-                return new WeatherService(transport);
-            }
+            authError: false,
+            networkError: false
         }
     },
     methods: {
         onNewMinute() {
+            if(this.networkError) {
+                this.refreshWeatherData();
+            }
             console.log("a new minute");
 
         },
         onNewHour() {
-            console.log("a new hour");
-            this.$refs.weather.updateWeather();
+            this.refreshWeatherData();
+        },
+        createWeatherService() {
+            this.networkError = false;
+            const transport = new HttpTransport(
+                    import.meta.env.VITE_APIKEY,
+                    import.meta.env.VITE_LAT,
+                    import.meta.env.VITE_LNG
+                );
+            return new WeatherService(transport);
 
+        },
+        refreshWeatherData() {
+            this.updateWeatherSummary()
+            if(!this.networkError) {
+                this.updateWeatherForecast()
+            }
+        },
+        updateWeatherSummary() {
+            if(this.authError) {
+                return;
+            }
+             try {
+                 // this.api.transport.siteId = null;
+                const summaryData = this.createWeatherService().minMaxTemperatures()
+                this.$refs.weather.updateSummary(summaryData);
+            } catch (error) {
+                this.setWeatherError(error);
+            }
+        },
+        updateWeatherForecast() {
+            if(this.authError) {
+                return;
+            }
+            const now = new Date;
+            try {
+                const forecastData = this.createWeatherService().forecast( now.getHours() )
+                this.$refs.weather.updateForecast(forecastData);
+            } catch (error) {
+                this.setWeatherError(error);
+            }
+        },
+        setWeatherError(error) {
+            if(error === "AUTH_ERROR") {
+                this.authError = true;
+                return false;
+            }
+            this.networkError = error;
         }
+    },
+    mounted() {
+        this.refreshWeatherData();
     },
     components: {
         Clock,
@@ -50,6 +95,7 @@ export default defineComponent({
     @hour="onNewHour" />
   <Calendar />
   <Weather
-    v-bind:api="weatherService()"
-    ref="weather" />
+    ref="weather"
+    :authError="authError"
+    :networkError="networkError" />
 </template>
