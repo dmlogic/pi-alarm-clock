@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Weather from './Weather.vue';
 
 function sleep(milliseconds) {
@@ -8,7 +8,7 @@ function sleep(milliseconds) {
 describe('Weather', () => {
 
     it ('does not show any weather if auth error', () => {
-        const wrapper = mount(Weather,{
+        const wrapper = shallowMount(Weather,{
             propsData: {
                 authError: true
             }
@@ -18,7 +18,7 @@ describe('Weather', () => {
     })
 
     it ('does not show auth warning if prop to false', () => {
-        const wrapper = mount(Weather,{
+        const wrapper = shallowMount(Weather,{
             propsData: {
                 authError: false
             }

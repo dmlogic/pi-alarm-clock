@@ -2,7 +2,7 @@
 import { defineComponent } from 'vue';
 export default defineComponent({
     props: [
-        'data',
+        'src',
     ]
 });
 </script>
@@ -31,8 +31,8 @@ export default defineComponent({
 
 <template>
     <ul class="weather-warnings">
-        <li class="warning-rain" v-if="data.dressForRain">Dress for rain</li>
-        <li class="warning-cold" v-if="data.dressForCold">Dress for cold</li>
-        <li class="warning-uv" v-if="data.applySunscreen">Apply sunscreen</li>
+        <li class="warning-rain" v-if="src.dressForRain">Dress for rain</li>
+        <li class="warning-cold" v-if="src.dressForCold">Dress for cold</li>
+        <li class="warning-uv" v-if="src.applySunscreen">Apply sunscreen</li>
     </ul>
 </template>
