@@ -7,17 +7,34 @@ function sleep(milliseconds) {
 
 describe('Weather', () => {
 
-    it('needs a change of approach to inject the data', async () => {
+    it ('does not show any weather if auth error', () => {
         const wrapper = mount(Weather,{
             propsData: {
-                config: {
-                    key: "mykey",
-                    lat: "myLat",
-                    lng: "myLng",
-                }
+                authError: true
             }
         })
-        expect(false).toEqual(true)
+        expect(wrapper.find('.auth').isVisible()).toBe(true);
+        expect(wrapper.find('.weather').exists()).toBe(false);
     })
+
+    it ('does not show auth warning if prop to false', () => {
+        const wrapper = mount(Weather,{
+            propsData: {
+                authError: false
+            }
+        })
+        expect(wrapper.find('.auth').exists()).toBe(false);
+        expect(wrapper.find('.weather').exists()).toBe(true);
+    })
+
+    it ('displays expected min and max temperatures', () => {
+    })
+
+    it ('displays the warnings block', () => {
+    })
+
+    it ('displays expected number of forecast blocks', () => {
+    })
+
 
 })

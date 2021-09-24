@@ -5,8 +5,7 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
     props: {
-        'authError': false,
-        'networkError': false,
+        'authError': false
     },
     data() {
         return {
