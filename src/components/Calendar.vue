@@ -36,8 +36,8 @@ export default defineComponent({
 </style>
 
 <template>
-    <div class="calendar">
-        <p class="calendar-part calendar-day" v-text="day"></p>
+    <div class="calendar bg-white bg-opacity-70 font-display text-4xl text-center text-gray-800 font-bold">
+        <p class="pt-2 text-5xl" v-text="day"></p>
         <p>
             <span class="calendar-part calendar-date" v-text="date"></span>
             <span class="calendar-part calendar-month" v-text="month"></span>

@@ -9,6 +9,9 @@ import WeatherService from "./weather/WeatherService.js"
 
 export default defineComponent({
   name: 'App',
+    props: {
+        mockedWeatherService: null
+    },
     data() {
         return {
             authError: false,
@@ -20,13 +23,14 @@ export default defineComponent({
             if(this.networkError) {
                 this.refreshWeatherData();
             }
-            console.log("a new minute");
-
         },
         onNewHour() {
             this.refreshWeatherData();
         },
         createWeatherService() {
+            if(this.mockedWeatherService) {
+                return this.mockedWeatherService
+            }
             this.networkError = false;
             const transport = new HttpTransport(
                     import.meta.env.VITE_APIKEY,
@@ -87,15 +91,22 @@ export default defineComponent({
 
 
 <style>
+.page {
+    width:800px;
+    height:480px;
+}
 </style>
 
 <template>
-  <Clock
-    @minute="onNewMinute"
-    @hour="onNewHour" />
-  <Calendar />
-  <Weather
-    ref="weather"
-    :authError="authError"
-    :networkError="networkError" />
+    <div class="page bg-blue-800 p-4">
+        <div class="grid grid-flow-col grid-cols-2 grid-rows-1 gap-4">
+            <Clock
+                @minute="onNewMinute"
+                @hour="onNewHour" />
+            <Calendar />
+        </div>
+        <Weather
+            ref="weather"
+            :authError="authError" />
+    </div>
 </template>

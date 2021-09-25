@@ -41,10 +41,10 @@ export default defineComponent({
     },
     computed: {
         tempLow() {
-            return `Min ${this.minTemp}°`;
+            return `min ${this.minTemp}°`;
         },
         tempHigh() {
-            return `Max ${this.maxTemp}°`;
+            return `max ${this.maxTemp}°`;
         }
     },
     components: {
@@ -55,21 +55,22 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
 </style>
 
 <template>
-    <div class="auth" v-if="authError">
+
+    <div class="auth text-white font-bold text-center p-8 text-center text-2xl" v-if="authError">
         Cannot collect weather data. Please check your api key and reboot
     </div>
+
     <div class="weather" v-if="!authError">
 
-        <ul class="weather-summary">
-            <li>{{tempLow}}</li>
-            <li>{{tempHigh}}</li>
+        <ul class="weather-summary text-white font-display text-4xl p-5 text-center w-1/2 font-bold">
+            <li class="inline-block pr-2" v-html="tempLow"></li>
+            <li class="inline-block pl-2" v-html="tempHigh"></li>
         </ul>
 
-        <Warnings :data="warnings" />
+        <Warnings :src="warnings" />
 
         <ul class="weather-forecast">
             <Forecast :src="forecast1" />

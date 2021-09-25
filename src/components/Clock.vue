@@ -36,19 +36,26 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.clock-part {
+[class^="clock-"] {
     display: inline-block;
 }
-.clock-minute:after,
+.clock-second {
+    width:35px;
+}
+.clock-minute:after {
+    content: ':';
+    font-size: 2.25rem;
+    padding-left:0.25rem;
+}
 .clock-minute:before {
     content: ':';
 }
 </style>
 
 <template>
-    <div class="clock">
-        <span class="clock-part clock-hour" v-text="hours"></span>
-        <span class="clock-part clock-minute" v-text="minutes"></span>
-        <span class="clock-part clock-second" v-text="seconds"></span>
+    <div class="clock bg-white bg-opacity-70 font-display text-8xl text-center text-gray-800 font-bold pb-2">
+        <span class="clock-hour" v-text="hours"></span>
+        <span class="clock-minute" v-text="minutes"></span>
+        <span class="clock-second text-4xl text-right" v-text="seconds"></span>
     </div>
 </template>
