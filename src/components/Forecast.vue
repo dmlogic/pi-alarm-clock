@@ -83,7 +83,7 @@ export default defineComponent({
             if(typeof this.src.type === 'undefined') {
                 return '';
             }
-            return `<img src="/weather_icons/${this.src.type}.svg">`;
+            return `<img class="inline-block" src="/weather_icons/${this.src.type}.svg">`;
 
         },
         tempColour() {
@@ -105,18 +105,13 @@ export default defineComponent({
 </script>
 
 <style>
-.forecast {
-    display:inline-block;
-    padding:6px;
-    text-align:center;
-}
 </style>
 
 <template>
-    <li class="forecast">
-        <div class="rain">{{theRain}}</div>
-        <div class="type" v-html="theIcon"></div>
-        <div class="temperature" :style="tempColour">{{theTemp}}</div>
-        <div class="time">{{theTime}}</div>
+    <li class="forecast bg-white bg-opacity-70 text-center mt-10 font-medium">
+        <div class="rain p-2">{{theRain}}</div>
+        <div class="type align-center" v-html="theIcon"></div>
+        <div class="temperature p-1" :style="tempColour">{{theTemp}}</div>
+        <div class="time p-1">{{theTime}}</div>
     </li>
 </template>

@@ -9,14 +9,11 @@ export default defineComponent({
 
 <style scoped>
 [class^="warning"] {
-    box-sizing: border-box;
-    display:inline-block;
-    width:123px;
-    height: 125px;
     overflow:hidden;
     background-repeat: no-repeat;
-    padding-top:125px;
+    height: 50px;
     background-size: contain;
+    background-position-x: center;
 }
 .warning-rain {
     background-image: url(umbrella.svg);
@@ -30,9 +27,9 @@ export default defineComponent({
 </style>
 
 <template>
-    <ul class="weather-warnings">
-        <li class="warning-rain" v-if="src.dressForRain">Dress for rain</li>
-        <li class="warning-cold" v-if="src.dressForCold">Dress for cold</li>
-        <li class="warning-uv" v-if="src.applySunscreen">Apply sunscreen</li>
-    </ul>
+    <div class="grid grid-flow-col grid-cols-5 grid-rows-1 gap-4 mt-4 pl-2">
+        <div class="warning-rain" v-if="src.dressForRain"></div>
+        <div class="warning-cold" v-if="src.dressForCold"></div>
+        <div class="warning-uv" v-if="src.applySunscreen"></div>
+    </div>
 </template>

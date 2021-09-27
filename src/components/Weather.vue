@@ -63,16 +63,19 @@ export default defineComponent({
         Cannot collect weather data. Please check your api key and reboot
     </div>
 
-    <div class="weather" v-if="!authError">
+    <div class="weather mt-4" v-if="!authError">
 
-        <ul class="weather-summary text-white font-display text-4xl p-5 text-center w-1/2 font-bold">
-            <li class="inline-block pr-2" v-html="tempLow"></li>
-            <li class="inline-block pl-2" v-html="tempHigh"></li>
-        </ul>
+        <div class="grid grid-flow-col grid-cols-2 grid-rows-1 gap-4">
 
-        <Warnings :src="warnings" />
+            <ul class="weather-summary text-white font-display text-4xl p-5 text-center font-bold">
+                <li class="inline-block pr-2" v-html="tempLow"></li>
+                <li class="inline-block pl-2" v-html="tempHigh"></li>
+            </ul>
 
-        <ul class="weather-forecast">
+            <Warnings :src="warnings" />
+        </div>
+
+        <ul class="weather-forecast grid grid-flow-col grid-cols-8 grid-rows-1 gap-2">
             <Forecast :src="forecast1" />
             <Forecast :src="forecast2" />
             <Forecast :src="forecast3" />
