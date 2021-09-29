@@ -47,15 +47,16 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.temp-desc {
-    font-weight: 500;
+.auth {
+    padding:100px;
 }
 </style>
 
 <template>
 
-    <div class="auth text-white font-bold text-center p-8 text-center text-2xl" v-if="authError">
-        Cannot collect weather data. Please check your api key and reboot
+    <div class="auth text-yellow-600 font-bold text-center text-center text-2xl" v-if="authError">
+        <p>Cannot collect weather data</p>
+        <p>Please check your api key and reboot</p>
     </div>
 
     <div class="weather mt-5" v-if="!authError">
@@ -64,10 +65,10 @@ export default defineComponent({
 
             <ul class="weather-summary text-white font-display text-4xl p-5 text-center font-bold">
                 <li class="inline-block pr-2" v-if="minTemp">
-                    <span class="font-medium">min</span> {{minTemp}}<span class="font-normal">°</span>
+                    <span class="font-medium">min</span> {{minTemp}}<span class="font-light">°</span>
                 </li>
                 <li class="inline-block pl-2" v-if="maxTemp">
-                    <span class="font-medium">max</span> {{maxTemp}}<span class="font-normal">°</span>
+                    <span class="font-medium">max</span> {{maxTemp}}<span class="font-light">°</span>
                 </li>
             </ul>
 

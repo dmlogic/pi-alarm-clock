@@ -1,6 +1,6 @@
 <script>
 import { defineComponent } from 'vue';
-import ordinal from "ordinal"
+import indicator from 'ordinal/indicator'
 export default defineComponent({
     data() {
         return {
@@ -17,7 +17,7 @@ export default defineComponent({
         updateCalendar() {
             let now = new Date;
             this.day = this.days[ now.getDay() ]
-            this.date = ordinal(now.getDate())
+            this.date = String(now.getDate())+'<small>'+indicator(now.getDate())+'</small>';
             this.month = this.months[ now.getMonth() ]
             this.year = now.getFullYear().toString()
         }
@@ -47,7 +47,7 @@ export default defineComponent({
     <div class="calendar bg-white bg-opacity-70 font-display text-center text-gray-800">
         <p class="calendar-day pt-5 mb-4 font-bold" v-text="day"></p>
         <p class="calendar-date font-semibold">
-            <span class="calendar-dom" v-text="date"></span>
+            <span class="calendar-dom" v-html="date"></span>
             <span class="calendar-month" v-text="month"></span>
             <span class="calendar-year" v-text="year"></span>
         </p>

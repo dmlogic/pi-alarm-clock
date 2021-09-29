@@ -53,7 +53,6 @@ export default defineComponent({
                 return;
             }
              try {
-                 // this.api.transport.siteId = null;
                 const summaryData = this.createWeatherService().minMaxTemperatures()
                 this.$refs.weather.updateSummary(summaryData);
             } catch (error) {
@@ -91,7 +90,6 @@ export default defineComponent({
     }
 });
 </script>
-
 
 <style>
 .page {

@@ -101,9 +101,9 @@ export default defineComponent({
 <template>
     <div class="alarm">
 
-        <button :class="bellClass"></button>
+        <button :class="bellClass" @click="displaySettings = !displaySettings"></button>
 
-        <section class="settings">
+        <section class="settings" v-if="displaySettings">
             <p>On/off button</p>
             <p>Hour setting</p>
             <p>Minute setting</p>
@@ -112,13 +112,13 @@ export default defineComponent({
             <button>OK</button>
         </section>
 
-        <section class="alert">
+        <section class="alert" v-if="isGoingOff">
             <h1>ALARM</h1>
-            <div>
-                <button>Snooze</button>
+            <div v-if="isSnoozed">
+                <p>Snoozed until [when]...</p>
             </div>
-            <div>
-                <p>Snoozed for countdown...</p>
+            <div v-else>
+                <button>Snooze</button>
             </div>
         </section>
 

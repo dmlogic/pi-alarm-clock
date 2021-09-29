@@ -47,13 +47,13 @@ export default defineComponent({
 .clock-second {
     width:35px;
 }
+.clock-minute:before,
 .clock-minute:after {
     content: ':';
-    font-size: 2.25rem;
-    padding-left:0.25rem;
+    font-weight: 300;
 }
-.clock-minute:before {
-    content: ':';
+.clock-minute:after {
+    font-size: 2.25rem;
 }
 </style>
 
