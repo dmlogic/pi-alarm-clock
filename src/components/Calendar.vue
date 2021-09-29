@@ -1,37 +1,61 @@
 <script>
-import { defineComponent } from 'vue';
-import indicator from 'ordinal/indicator'
+import { defineComponent } from "vue"
+import indicator from "ordinal/indicator"
 export default defineComponent({
     data() {
         return {
-            day: '',
-            date: '',
-            month: '',
-            year: '',
-            days:['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-            months:['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-
+            day: "",
+            date: "",
+            month: "",
+            year: "",
+            days: [
+                "Sunday",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+            ],
+            months: [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December",
+            ],
         }
     },
     methods: {
         updateCalendar() {
-            let now = new Date;
-            this.day = this.days[ now.getDay() ]
-            this.date = String(now.getDate())+'<small>'+indicator(now.getDate())+'</small>';
-            this.month = this.months[ now.getMonth() ]
+            let now = new Date()
+            this.day = this.days[now.getDay()]
+            this.date =
+                String(now.getDate()) +
+                "<small>" +
+                indicator(now.getDate()) +
+                "</small>"
+            this.month = this.months[now.getMonth()]
             this.year = now.getFullYear().toString()
-        }
+        },
     },
     mounted() {
         const timer = setInterval(this.updateCalendar, 60000)
         this.updateCalendar()
-    }
-});
+    },
+})
 </script>
 
 <style scoped>
 .calendar-month {
-    padding:0 0.8vw;
+    padding: 0 0.8vw;
 }
 .calendar-day,
 .calendar-date {
@@ -44,7 +68,14 @@ export default defineComponent({
 </style>
 
 <template>
-    <div class="calendar bg-white bg-opacity-70 font-display text-center text-gray-800">
+    <div
+        class="
+            calendar
+            bg-white bg-opacity-70
+            font-display
+            text-center text-gray-800
+        "
+    >
         <p class="calendar-day pt-5 mb-4 font-bold" v-text="day"></p>
         <p class="calendar-date font-semibold">
             <span class="calendar-dom" v-html="date"></span>

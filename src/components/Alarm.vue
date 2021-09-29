@@ -1,5 +1,5 @@
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from "vue"
 export default defineComponent({
     data() {
         return {
@@ -55,37 +55,34 @@ export default defineComponent({
     },
     methods: {
         check(timeNow) {
-            if(this.isSet || this.isGoingOff || this.isSnoozed) {
-                return;
+            if (this.isSet || this.isGoingOff || this.isSnoozed) {
+                return
             }
             // check if we should go off
-        }
+        },
     },
     computed: {
         bellClass() {
-            return this.isSet ?
-                    'bell-set' :
-                    'bell-off';
-        }
+            return this.isSet ? "bell-set" : "bell-off"
+        },
     },
-    mounted() {
-    }
-});
+    mounted() {},
+})
 </script>
 
 <style scoped>
 .alarm {
-    position:fixed;
-    top:0;
-    left:0;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 [class^="bell-"] {
-    position:absolute;
-    top:190px;
-    left:750px;
+    position: absolute;
+    top: 190px;
+    left: 750px;
     display: inline-block;
-    width:60px;
-    height:60px;
+    width: 60px;
+    height: 60px;
     mask: url(/alarm.svg) no-repeat center;
 }
 .bell-set {
@@ -94,14 +91,16 @@ export default defineComponent({
 }
 .bell-off {
     opacity: 0.2;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
 }
 </style>
 
 <template>
     <div class="alarm">
-
-        <button :class="bellClass" @click="displaySettings = !displaySettings"></button>
+        <button
+            :class="bellClass"
+            @click="displaySettings = !displaySettings"
+        ></button>
 
         <section class="settings" v-if="displaySettings">
             <p>On/off button</p>
@@ -121,6 +120,5 @@ export default defineComponent({
                 <button>Snooze</button>
             </div>
         </section>
-
     </div>
 </template>

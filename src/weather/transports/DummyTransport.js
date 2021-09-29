@@ -1,20 +1,18 @@
 class DummyTransport {
-
-    expectedError = null;
+    expectedError = null
 
     constructor(siteId, payload) {
-        this.siteId = siteId;
-        this.payload = payload;
+        this.siteId = siteId
+        this.payload = payload
     }
 
     expectError(message) {
-        this.expectedError = message;
+        this.expectedError = message
     }
 
-
     lookupSiteId() {
-        this.checkForError();
-        return this.siteId;
+        this.checkForError()
+        return this.siteId
     }
 
     getDailyData() {
@@ -25,17 +23,16 @@ class DummyTransport {
         return this.getMockedData()
     }
 
-
     getMockedData() {
-        this.checkForError();
-        if(typeof this.payload !== "object") {
-            return {};
+        this.checkForError()
+        if (typeof this.payload !== "object") {
+            return {}
         }
-        return this.payload;
+        return this.payload
     }
 
     checkForError() {
-        if(this.expectedError) {
+        if (this.expectedError) {
             throw this.expectedError
         }
     }

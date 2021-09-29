@@ -16,7 +16,6 @@ I use MetOffice as I find it accurate and there is a weather station round the c
 
 Weather is provided as:
 
-* A min and max temperature for the current day
-* Forecast summary for the next 24 hours in 3-hour intervals
-* Alerts badges on key weather events: High UV, Cold and Rain
-
+-   A min and max temperature for the current day
+-   Forecast summary for the next 24 hours in 3-hour intervals
+-   Alerts badges on key weather events: High UV, Cold and Rain

@@ -1,5 +1,5 @@
 [
-      {
+    {
         "elevation": "49.0",
         "id": "354147",
         "latitude": "50.5169",
@@ -7,8 +7,8 @@
         "name": "West Ogwell",
         "region": "sw",
         "unitaryAuthArea": "Devon"
-      },
-      {
+    },
+    {
         "elevation": "135.0",
         "id": "354150",
         "latitude": "51.6388",
@@ -16,8 +16,8 @@
         "name": "West Wycombe Park",
         "region": "se",
         "unitaryAuthArea": "Buckinghamshire"
-      },
-      {
+    },
+    {
         "elevation": "78.0",
         "id": "354152",
         "latitude": "51.2562",
@@ -25,8 +25,8 @@
         "name": "Westbury (Wiltshire)",
         "region": "sw",
         "unitaryAuthArea": "Wiltshire"
-      },
-      {
+    },
+    {
         "elevation": "5.0",
         "id": "354160",
         "latitude": "51.4982",
@@ -34,8 +34,8 @@
         "name": "Westminster",
         "region": "se",
         "unitaryAuthArea": "Greater London"
-      },
-      {
+    },
+    {
         "elevation": "69.0",
         "id": "354167",
         "latitude": "51.3262",
@@ -43,8 +43,8 @@
         "name": "Westwood Manor",
         "region": "sw",
         "unitaryAuthArea": "Wiltshire"
-      },
-      {
+    },
+    {
         "elevation": "28.0",
         "id": "354173",
         "latitude": "53.4475",
@@ -52,8 +52,8 @@
         "name": "Whalley Range",
         "region": "nw",
         "unitaryAuthArea": "Greater Manchester"
-      },
-      {
+    },
+    {
         "elevation": "239.0",
         "id": "354221",
         "latitude": "50.5745",
@@ -62,8 +62,8 @@
         "nationalPark": "Dartmoor National Park",
         "region": "sw",
         "unitaryAuthArea": "Devon"
-      },
-      {
+    },
+    {
         "elevation": "74.0",
         "id": "354227",
         "latitude": "52.7628",
@@ -71,8 +71,8 @@
         "name": "Wilcott",
         "region": "wm",
         "unitaryAuthArea": "Shropshire"
-      },
-      {
+    },
+    {
         "elevation": "83.0",
         "id": "354231",
         "latitude": "52.3852",
@@ -80,5 +80,5 @@
         "name": "Willenhall (Nr Coventry)",
         "region": "wm",
         "unitaryAuthArea": "West Midlands Conurbation"
-      }
+    }
 ]
