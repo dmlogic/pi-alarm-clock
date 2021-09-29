@@ -3,6 +3,7 @@ import { defineComponent } from 'vue'
 import Clock from './components/Clock.vue'
 import Calendar from './components/Calendar.vue'
 import Weather from './components/Weather.vue'
+import Alarm from './components/Alarm.vue'
 
 import HttpTransport from "./weather/transports/HttpTransport.js";
 import WeatherService from "./weather/WeatherService.js"
@@ -19,12 +20,13 @@ export default defineComponent({
         }
     },
     methods: {
-        onNewMinute() {
+        onNewMinute(dateObj) {
             if(this.networkError) {
                 this.refreshWeatherData();
             }
+            this.$refs.alarm.check(dateObj);
         },
-        onNewHour() {
+        onNewHour(dateObj) {
             this.refreshWeatherData();
         },
         createWeatherService() {
@@ -84,7 +86,8 @@ export default defineComponent({
     components: {
         Clock,
         Calendar,
-        Weather
+        Weather,
+        Alarm,
     }
 });
 </script>
@@ -108,5 +111,7 @@ export default defineComponent({
         <Weather
             ref="weather"
             :authError="authError" />
+        <Alarm
+            ref="alarm" />
     </div>
 </template>

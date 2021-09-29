@@ -21,10 +21,10 @@ export default defineComponent({
 
             if(seconds === 0) {
                 if(minutes === 0) {
-                    this.$emit('hour');
+                    this.$emit('hour', now);
                     return;
                 }
-                this.$emit('minute');
+                this.$emit('minute', now);
             }
         }
     },
