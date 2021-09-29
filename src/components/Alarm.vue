@@ -1,5 +1,6 @@
 <script>
 import { defineComponent } from "vue"
+import Modal from "./Modal.vue"
 export default defineComponent({
     data() {
         return {
@@ -60,13 +61,21 @@ export default defineComponent({
             }
             // check if we should go off
         },
+        something() {
+            console.log("something");
+        }
     },
     computed: {
         bellClass() {
             return this.isSet ? "bell-set" : "bell-off"
         },
     },
-    mounted() {},
+    mounted() {
+
+    },
+    components: {
+        Modal
+    }
 })
 </script>
 
@@ -103,12 +112,22 @@ export default defineComponent({
         ></button>
 
         <section class="settings" v-if="displaySettings">
-            <p>On/off button</p>
-            <p>Hour setting</p>
-            <p>Minute setting</p>
-            <p>Day checkboxes</p>
-            <p>Snooze count</p>
-            <button>OK</button>
+            <Modal>
+                <template v-slot:body>
+                    <p>On/off button</p>
+                    <p>Hour setting</p>
+                    <p>Minute setting</p>
+                    <p>Day checkboxes</p>
+                    <p>Snooze count</p>
+                </template>
+                <template v-slot:footer>
+                    <button
+                        type="button" class="mt-3 inline-flex justify-center rounded-md border border-gray-300 px-4 py-2"
+                        @click="displaySettings = false">
+                        OK
+                    </button>
+                </template>
+            </Modal>
         </section>
 
         <section class="alert" v-if="isGoingOff">
