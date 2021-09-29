@@ -31,7 +31,7 @@ export default defineComponent({
 
 <style scoped>
 .calendar-month {
-    padding:0 1vw;
+    padding:0 0.8vw;
 }
 .calendar-day,
 .calendar-date {
