@@ -61,6 +61,12 @@ export default defineComponent({
         'src',
     ],
     computed: {
+        rainColour() {
+            if(typeof this.src.rain === 'undefined' || this.src.rain < 30) {
+                return '';
+            }
+            return 'color: rgba(28,116,153)';
+        },
         theTime() {
             if(typeof this.src.time === 'undefined') {
                 return ''
@@ -105,13 +111,16 @@ export default defineComponent({
 </script>
 
 <style>
+.type img {
+    height: 70px;
+}
 </style>
 
 <template>
-    <li class="forecast bg-white bg-opacity-70 text-center mt-10 font-medium">
-        <div class="rain p-2">{{theRain}}</div>
+    <li class="forecast bg-white bg-opacity-70 text-center mt-12 font-semibold text-xl">
+        <div class="rain p-2" :style="rainColour">{{theRain}}</div>
         <div class="type align-center" v-html="theIcon"></div>
-        <div class="temperature p-1" :style="tempColour">{{theTemp}}</div>
-        <div class="time p-1">{{theTime}}</div>
+        <div class="temperature mx-5" :style="tempColour">{{theTemp}}</div>
+        <div class="time py-3">{{theTime}}</div>
     </li>
 </template>

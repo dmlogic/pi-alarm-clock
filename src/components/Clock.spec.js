@@ -10,7 +10,7 @@ describe('Clock', () => {
     it('should display the time', async () => {
         const wrapper = mount(Clock)
 
-        let els = await wrapper.findAll('.clock .clock-part');
+        let els = await wrapper.findAll('[class^="clock-"]');
         let now = new Date;
         expect(els.length).toEqual(3)
         expect(els[0].text()).toEqual( now.getHours().toString().padStart(2, '0'))

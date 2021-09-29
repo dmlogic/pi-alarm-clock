@@ -36,6 +36,11 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.clock {
+    height:130px;
+    font-size: 6.5rem;
+    line-height: 1.1;
+}
 [class^="clock-"] {
     display: inline-block;
 }
@@ -53,7 +58,7 @@ export default defineComponent({
 </style>
 
 <template>
-    <div class="clock bg-white bg-opacity-70 font-display text-8xl text-center text-gray-800 font-bold pb-2">
+    <div class="clock bg-white bg-opacity-70 font-display text-center text-gray-800 font-bold">
         <span class="clock-hour" v-text="hours"></span>
         <span class="clock-minute" v-text="minutes"></span>
         <span class="clock-second text-4xl text-right" v-text="seconds"></span>

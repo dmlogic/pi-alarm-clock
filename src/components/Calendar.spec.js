@@ -13,7 +13,7 @@ describe('Calendar', () => {
         let now = new Date;
         await wrapper.find('.calendar')
         let day = await wrapper.find('.calendar-day').text();
-        let date = await wrapper.find('.calendar-date').text();
+        let date = await wrapper.find('.calendar-dom').text();
         let month = await wrapper.find('.calendar-month').text();
         let year = await wrapper.find('.calendar-year').text();
 

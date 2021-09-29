@@ -33,15 +33,23 @@ export default defineComponent({
 .calendar-month {
     padding:0 1vw;
 }
+.calendar-day,
+.calendar-date {
+    font-size: 2.6rem;
+    line-height: 1;
+}
+.calendar-date {
+    font-size: 2.1rem;
+}
 </style>
 
 <template>
-    <div class="calendar bg-white bg-opacity-70 font-display text-4xl text-center text-gray-800 font-bold">
-        <p class="pt-2 text-5xl" v-text="day"></p>
-        <p>
-            <span class="calendar-part calendar-date" v-text="date"></span>
-            <span class="calendar-part calendar-month" v-text="month"></span>
-            <span class="calendar-part calendar-year" v-text="year"></span>
+    <div class="calendar bg-white bg-opacity-70 font-display text-center text-gray-800">
+        <p class="calendar-day pt-5 mb-4 font-bold" v-text="day"></p>
+        <p class="calendar-date font-semibold">
+            <span class="calendar-dom" v-text="date"></span>
+            <span class="calendar-month" v-text="month"></span>
+            <span class="calendar-year" v-text="year"></span>
         </p>
     </div>
 </template>

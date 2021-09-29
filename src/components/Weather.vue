@@ -39,14 +39,6 @@ export default defineComponent({
             this.forecast8 = data.forecast[7];
         }
     },
-    computed: {
-        tempLow() {
-            return `min ${this.minTemp}°`;
-        },
-        tempHigh() {
-            return `max ${this.maxTemp}°`;
-        }
-    },
     components: {
         Forecast,
         Warnings
@@ -55,6 +47,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.temp-desc {
+    font-weight: 500;
+}
 </style>
 
 <template>
@@ -63,13 +58,17 @@ export default defineComponent({
         Cannot collect weather data. Please check your api key and reboot
     </div>
 
-    <div class="weather mt-4" v-if="!authError">
+    <div class="weather mt-5" v-if="!authError">
 
         <div class="grid grid-flow-col grid-cols-2 grid-rows-1 gap-4">
 
             <ul class="weather-summary text-white font-display text-4xl p-5 text-center font-bold">
-                <li class="inline-block pr-2" v-html="tempLow"></li>
-                <li class="inline-block pl-2" v-html="tempHigh"></li>
+                <li class="inline-block pr-2" v-if="minTemp">
+                    <span class="font-medium">min</span> {{minTemp}}<span class="font-normal">°</span>
+                </li>
+                <li class="inline-block pl-2" v-if="maxTemp">
+                    <span class="font-medium">max</span> {{maxTemp}}<span class="font-normal">°</span>
+                </li>
             </ul>
 
             <Warnings :src="warnings" />

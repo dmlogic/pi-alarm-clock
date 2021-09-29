@@ -11,7 +11,7 @@ export default defineComponent({
 [class^="warning"] {
     overflow:hidden;
     background-repeat: no-repeat;
-    height: 50px;
+    height: 60px;
     background-size: contain;
     background-position-x: center;
 }
@@ -27,7 +27,7 @@ export default defineComponent({
 </style>
 
 <template>
-    <div class="grid grid-flow-col grid-cols-5 grid-rows-1 gap-4 mt-4 pl-2">
+    <div class="grid grid-flow-col grid-cols-5 grid-rows-1 gap-4 mt-3 pl-2">
         <div class="warning-rain" v-if="src.dressForRain"></div>
         <div class="warning-cold" v-if="src.dressForCold"></div>
         <div class="warning-uv" v-if="src.applySunscreen"></div>

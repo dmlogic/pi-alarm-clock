@@ -98,7 +98,7 @@ export default defineComponent({
 </style>
 
 <template>
-    <div class="page bg-blue-800 p-4">
+    <div class="page">
         <div class="grid grid-flow-col grid-cols-2 grid-rows-1 gap-4">
             <Clock
                 @minute="onNewMinute"
