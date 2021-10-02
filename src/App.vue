@@ -3,7 +3,7 @@ import { defineComponent } from "vue"
 import Clock from "./components/Clock.vue"
 import Calendar from "./components/Calendar.vue"
 import Weather from "./components/Weather.vue"
-import Alarm from "./components/Alarm.vue"
+import Alarm from "./components/Alarm/Alarm.vue"
 
 import HttpTransport from "./weather/transports/HttpTransport.js"
 import WeatherService from "./weather/WeatherService.js"

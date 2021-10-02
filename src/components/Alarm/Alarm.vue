@@ -1,6 +1,7 @@
 <script>
 import { defineComponent } from "vue"
 import Modal from "./Modal.vue"
+import NumberInput from "./NumberInput.vue"
 export default defineComponent({
     data() {
         return {
@@ -35,11 +36,11 @@ export default defineComponent({
             /**
              * The set alarm hour
              */
-            hour: null,
+            hour: 15,
             /**
              * The set alarm minute
              */
-            minute: null,
+            minute: 22,
             /**
              * The days on which the alarm is set to go off
              */
@@ -47,7 +48,7 @@ export default defineComponent({
             /**
              * Are we showing the settings panel?
              */
-            displaySettings: false,
+            displaySettings: true,
             /**
              * The sound we will play
              */
@@ -59,7 +60,13 @@ export default defineComponent({
             if (this.isSet || this.isGoingOff || this.isSnoozed) {
                 return
             }
-            // check if we should go off
+            // check if we should go offs
+        },
+        setHour(to) {
+            this.hour = to
+        },
+        setMinute(to) {
+            this.minute = to
         },
         something() {
             console.log("something");
@@ -74,7 +81,8 @@ export default defineComponent({
 
     },
     components: {
-        Modal
+        Modal,
+        NumberInput
     }
 })
 </script>
@@ -115,8 +123,10 @@ export default defineComponent({
             <Modal>
                 <template v-slot:body>
                     <p>On/off button</p>
-                    <p>Hour setting</p>
-                    <p>Minute setting</p>
+                    <div class="grid grid-flow-col grid-cols-3 grid-rows-1 gap-4">
+                        <NumberInput :label="'Hour'" :value="hour" :max="23" @change="setHour" />
+                        <NumberInput :label="'Minute'" :value="minute" :max="59"  @change="setMinute"  />
+                    </div>
                     <p>Day checkboxes</p>
                     <p>Snooze count</p>
                 </template>
