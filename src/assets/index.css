@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 body {
+    background: black;
+}
+
+#app {
     background: rgba(30, 64, 175);
     padding: 24px;
+    width: 800px;
+    height: 480px;
 }

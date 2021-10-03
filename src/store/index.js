@@ -6,11 +6,10 @@ export default createStore({
             timeNow: null,
             weatherAuthenticationError: false,
             alarmIsSet: false,
-            alarmHour: 15,
-            alarmMinute: 22,
+            alarmHour: 6,
+            alarmMinute: 30,
             alarmDays: [1, 2, 3, 4, 5],
             snoozesAllowed: 3,
-            snoozeMinutes: 10,
             snoozeMinutes: 10,
         }
     },
@@ -29,6 +28,9 @@ export default createStore({
         },
         setSnoozes(state, value) {
             state.snoozesAllowed = parseInt(value)
+        },
+        setSnoozeMinutes(state, value) {
+            state.snoozeMinutes = parseInt(value)
         },
         setAlarmDays(state, value) {
             state.alarmDays = value

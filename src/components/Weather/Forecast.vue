@@ -1,6 +1,6 @@
 <script>
 import { defineComponent } from "vue"
-import { padTime } from "../functions.js"
+import { padTime } from "../../functions.js"
 
 const temperatureColours = {
     tm10: [127, 141, 184],
@@ -119,7 +119,7 @@ export default defineComponent({
             forecast
             bg-white bg-opacity-70
             text-center
-            mt-12
+            mt-4
             font-semibold
             text-xl
         "
@@ -127,6 +127,6 @@ export default defineComponent({
         <div class="rain p-2" :style="rainColour">{{ theRain }}</div>
         <div class="type align-center" v-html="theIcon"></div>
         <div class="temperature mx-5" :style="tempColour">{{ theTemp }}</div>
-        <div class="time py-3">{{ theTime }}</div>
+        <div class="time py-2">{{ theTime }}</div>
     </li>
 </template>

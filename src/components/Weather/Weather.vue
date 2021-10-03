@@ -59,7 +59,7 @@ export default defineComponent({
         <p>Please check your api key and reboot</p>
     </div>
 
-    <div class="weather mt-5" v-if="!authError">
+    <div class="weather mt-4" v-if="!authError">
         <div class="grid grid-flow-col grid-cols-2 grid-rows-1 gap-4">
             <ul
                 class="

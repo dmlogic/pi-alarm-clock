@@ -12,6 +12,7 @@
         "format": "prettier .  --write"
     },
     "dependencies": {
+        "@tailwindcss/forms": "^0.3.4",
         "datapoint-js": "^0.2.1",
         "faker": "^5.5.3",
         "ordinal": "^1.0.3",

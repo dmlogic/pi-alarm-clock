@@ -130,7 +130,7 @@ export default class WeatherService {
             this.returnedWarnings.applySunscreen = true
         }
 
-        if (data.rain && data.rain > 30) {
+        if (data.rain && data.rain > 40) {
             this.returnedWarnings.dressForRain = true
         }
 

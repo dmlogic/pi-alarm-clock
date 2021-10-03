@@ -32,33 +32,16 @@ export default defineComponent({
 })
 </script>
 <template>
-    <div class="custom-number-input h-10 w-32">
-        <div class="w-full text-gray-700 text-sm font-semibold">
+    <div class="w-40">
+        <div class="text-xl font-semibold">
             {{ label }}
         </div>
-        <div
-            class="
-                flex flex-row
-                h-10
-                w-full
-                rounded-lg
-                relative
-                bg-transparent
-                mt-1
-            "
-        >
+        <div class="flex flex-row rounded-lg relative my-2">
             <button
-                class="
-                    bg-gray-300
-                    text-gray-600
-                    h-full
-                    w-20
-                    rounded-l
-                    outline-none
-                "
+                class="bg-gray-300 text-gray-400 w-20 rounded-l outline-none"
                 @click="decrement"
             >
-                <span class="m-auto text-2xl font-thin">−</span>
+                <span class="m-auto text-4xl font-bold">−</span>
             </button>
             <input
                 v-model="internalValue"
@@ -72,22 +55,15 @@ export default defineComponent({
                     text-md
                     flex
                     items-center
-                    text-gray-700
+                    text-gray-700 text-2xl
                     outline-none
                 "
             />
             <button
-                class="
-                    bg-gray-300
-                    text-gray-600
-                    h-full
-                    w-20
-                    rounded-r
-                    cursor-pointer
-                "
+                class="bg-gray-300 text-gray-400 w-20 rounded-r"
                 @click="increment"
             >
-                <span class="m-auto text-2xl font-thin">+</span>
+                <span class="m-auto text-4xl font-bold">+</span>
             </button>
         </div>
     </div>

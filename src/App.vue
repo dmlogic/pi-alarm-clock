@@ -2,7 +2,7 @@
 import { defineComponent } from "vue"
 import Clock from "./components/Clock.vue"
 import Calendar from "./components/Calendar.vue"
-import Weather from "./components/Weather.vue"
+import Weather from "./components/Weather/Weather.vue"
 import Alarm from "./components/Alarm/Alarm.vue"
 
 import HttpTransport from "./weather/transports/HttpTransport.js"
@@ -92,12 +92,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
-.page {
-    width: 800px;
-    height: 480px;
-}
-</style>
+<style></style>
 
 <template>
     <div class="page">
