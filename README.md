@@ -20,7 +20,3 @@ Weather is provided as:
 -   Forecast summary for the next 24 hours in 3-hour intervals
 -   Alerts badges on key weather events: High UV, Cold and Rain
 
-## Audio
-
-Look into this:
-google-chrome --autoplay-policy=no-user-gesture-required --kiosk
