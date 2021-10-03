@@ -4,6 +4,7 @@ import indicator from "ordinal/indicator"
 export default defineComponent({
     data() {
         return {
+            now: this.$store.state.timeNow,
             day: "",
             date: "",
             month: "",
@@ -35,15 +36,14 @@ export default defineComponent({
     },
     methods: {
         updateCalendar() {
-            let now = new Date()
-            this.day = this.days[now.getDay()]
+            this.day = this.days[this.now.getDay()]
             this.date =
-                String(now.getDate()) +
+                String(this.now.getDate()) +
                 "<small>" +
-                indicator(now.getDate()) +
+                indicator(this.now.getDate()) +
                 "</small>"
-            this.month = this.months[now.getMonth()]
-            this.year = now.getFullYear().toString()
+            this.month = this.months[this.now.getMonth()]
+            this.year = this.now.getFullYear().toString()
         },
     },
     mounted() {

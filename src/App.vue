@@ -15,18 +15,17 @@ export default defineComponent({
     },
     data() {
         return {
-            authError: false,
             networkError: false,
         }
     },
     methods: {
-        onNewMinute(dateObj) {
+        onNewMinute() {
             if (this.networkError) {
                 this.refreshWeatherData()
             }
-            this.$refs.alarm.check(dateObj)
+            this.$refs.alarm.check()
         },
-        onNewHour(dateObj) {
+        onNewHour() {
             this.refreshWeatherData()
         },
         createWeatherService() {
@@ -48,7 +47,7 @@ export default defineComponent({
             }
         },
         updateWeatherSummary() {
-            if (this.authError) {
+            if (this.$store.state.weatherAuthenticationError) {
                 return
             }
             try {
@@ -60,7 +59,7 @@ export default defineComponent({
             }
         },
         updateWeatherForecast() {
-            if (this.authError) {
+            if (this.$store.state.weatherAuthenticationError) {
                 return
             }
             const now = new Date()
@@ -75,7 +74,7 @@ export default defineComponent({
         },
         setWeatherError(error) {
             if (error === "AUTH_ERROR") {
-                this.authError = true
+                this.$store.commit("setAuthenticationError", true)
                 return false
             }
             this.networkError = error
@@ -106,7 +105,7 @@ export default defineComponent({
             <Clock @minute="onNewMinute" @hour="onNewHour" />
             <Calendar />
         </div>
-        <Weather ref="weather" :authError="authError" />
+        <Weather ref="weather" />
         <Alarm ref="alarm" />
     </div>
 </template>

@@ -20,11 +20,12 @@ export default defineComponent({
             this.seconds = padTime(seconds)
 
             if (seconds === 0) {
+                this.$store.commit("setTime", now)
                 if (minutes === 0) {
-                    this.$emit("hour", now)
+                    this.$emit("hour")
                     return
                 }
-                this.$emit("minute", now)
+                this.$emit("minute")
             }
         },
     },

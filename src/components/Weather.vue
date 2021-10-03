@@ -4,11 +4,9 @@ import Warnings from "./Warnings.vue"
 import { defineComponent } from "vue"
 
 export default defineComponent({
-    props: {
-        authError: false,
-    },
     data() {
         return {
+            authError: this.$store.state.weatherAuthenticationError,
             minTemp: null,
             maxTemp: null,
             warnings: {},

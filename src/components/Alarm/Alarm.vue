@@ -69,21 +69,19 @@ export default defineComponent({
             this.minute = to
         },
         something() {
-            console.log("something");
-        }
+            console.log("something")
+        },
     },
     computed: {
         bellClass() {
             return this.isSet ? "bell-set" : "bell-off"
         },
     },
-    mounted() {
-
-    },
+    mounted() {},
     components: {
         Modal,
-        NumberInput
-    }
+        NumberInput,
+    },
 })
 </script>
 
@@ -123,17 +121,39 @@ export default defineComponent({
             <Modal>
                 <template v-slot:body>
                     <p>On/off button</p>
-                    <div class="grid grid-flow-col grid-cols-3 grid-rows-1 gap-4">
-                        <NumberInput :label="'Hour'" :value="hour" :max="23" @change="setHour" />
-                        <NumberInput :label="'Minute'" :value="minute" :max="59"  @change="setMinute"  />
+                    <div
+                        class="grid grid-flow-col grid-cols-3 grid-rows-1 gap-4"
+                    >
+                        <NumberInput
+                            :label="'Hour'"
+                            :value="hour"
+                            :max="23"
+                            @change="setHour"
+                        />
+                        <NumberInput
+                            :label="'Minute'"
+                            :value="minute"
+                            :max="59"
+                            @change="setMinute"
+                        />
                     </div>
                     <p>Day checkboxes</p>
                     <p>Snooze count</p>
                 </template>
                 <template v-slot:footer>
                     <button
-                        type="button" class="mt-3 inline-flex justify-center rounded-md border border-gray-300 px-4 py-2"
-                        @click="displaySettings = false">
+                        type="button"
+                        class="
+                            mt-3
+                            inline-flex
+                            justify-center
+                            rounded-md
+                            border border-gray-300
+                            px-4
+                            py-2
+                        "
+                        @click="displaySettings = false"
+                    >
                         OK
                     </button>
                 </template>
