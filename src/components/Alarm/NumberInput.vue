@@ -1,7 +1,7 @@
 <script>
 import { defineComponent } from "vue"
 export default defineComponent({
-    props: ["value", "label", "max"],
+    props: ["value", "label", "max", "min"],
     data() {
         return {
             internalValue: null,
@@ -20,8 +20,9 @@ export default defineComponent({
             this.$emit("change", this.internalValue)
         },
         decrement() {
+            const floor = this.min || 0
             let nextValue = this.internalValue - 1
-            if (nextValue < 1) {
+            if (nextValue < floor) {
                 nextValue = this.max
             }
             this.internalValue = nextValue

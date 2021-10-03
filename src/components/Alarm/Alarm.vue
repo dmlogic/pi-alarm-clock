@@ -6,10 +6,6 @@ export default defineComponent({
     data() {
         return {
             /**
-             * Is the alarm in a state where it's set to go off?
-             */
-            isSet: false,
-            /**
              * Is the alarm going off right now?
              */
             isGoingOff: false,
@@ -26,26 +22,6 @@ export default defineComponent({
              */
             snoozeCount: 0,
             /**
-             * How many times we may snooze
-             */
-            snoozesAllowed: 0,
-            /**
-             * How long snoozes last
-             */
-            snoozeMinutes: 10,
-            /**
-             * The set alarm hour
-             */
-            hour: 15,
-            /**
-             * The set alarm minute
-             */
-            minute: 22,
-            /**
-             * The days on which the alarm is set to go off
-             */
-            days: [],
-            /**
              * Are we showing the settings panel?
              */
             displaySettings: true,
@@ -53,31 +29,48 @@ export default defineComponent({
              * The sound we will play
              */
             audioFile: "",
+            daySelections: [false, false, false, false, false, false, false],
         }
     },
     methods: {
-        check(timeNow) {
+        check() {
             if (this.isSet || this.isGoingOff || this.isSnoozed) {
                 return
             }
-            // check if we should go offs
+            // check if we should go off
         },
         setHour(to) {
-            this.hour = to
+            this.$store.commit("setAlarmHour", to)
         },
         setMinute(to) {
-            this.minute = to
+            this.$store.commit("setAlarmMinute", to)
         },
-        something() {
-            console.log("something")
+        setSnoozes(to) {
+            this.$store.commit("setSnoozes", to)
+        },
+        setDays() {
+            let selection = []
+            for (let index = 0; index < this.daySelections.length; index++) {
+                if (this.daySelections[index] === true) {
+                    selection.push(index)
+                }
+            }
+            this.$store.commit("setAlarmDays", selection)
+        },
+        setOnOff(ev) {
+            this.$store.commit("setOnOff", ev.target.checked)
         },
     },
     computed: {
         bellClass() {
-            return this.isSet ? "bell-set" : "bell-off"
+            return this.$store.state.alarmIsSet ? "bell-set" : "bell-off"
         },
     },
-    mounted() {},
+    mounted() {
+        this.$store.state.alarmDays.forEach(
+            (i) => (this.daySelections[i] = true)
+        )
+    },
     components: {
         Modal,
         NumberInput,
@@ -120,25 +113,102 @@ export default defineComponent({
         <section class="settings" v-if="displaySettings">
             <Modal>
                 <template v-slot:body>
-                    <p>On/off button</p>
+                    <label
+                        ><input
+                            type="checkbox"
+                            value="1"
+                            :checked="$store.state.alarmIsSet"
+                            @change="setOnOff"
+                        />
+                        Alarm on</label
+                    >
                     <div
                         class="grid grid-flow-col grid-cols-3 grid-rows-1 gap-4"
                     >
                         <NumberInput
                             :label="'Hour'"
-                            :value="hour"
+                            :value="$store.state.alarmHour"
                             :max="23"
                             @change="setHour"
                         />
                         <NumberInput
                             :label="'Minute'"
-                            :value="minute"
+                            :value="$store.state.alarmMinute"
                             :max="59"
                             @change="setMinute"
                         />
                     </div>
                     <p>Day checkboxes</p>
-                    <p>Snooze count</p>
+                    <label
+                        ><input
+                            type="checkbox"
+                            value="1"
+                            v-model="daySelections[1]"
+                            @change="setDays"
+                        />
+                        Monday</label
+                    >
+                    <label
+                        ><input
+                            type="checkbox"
+                            value="2"
+                            v-model="daySelections[2]"
+                            @change="setDays"
+                        />
+                        Tuesday</label
+                    >
+                    <label
+                        ><input
+                            type="checkbox"
+                            value="3"
+                            v-model="daySelections[3]"
+                            @change="setDays"
+                        />
+                        Wednesday</label
+                    >
+                    <label
+                        ><input
+                            type="checkbox"
+                            value="4"
+                            v-model="daySelections[4]"
+                            @change="setDays"
+                        />
+                        Thursday</label
+                    >
+                    <label
+                        ><input
+                            type="checkbox"
+                            value="5"
+                            v-model="daySelections[5]"
+                            @change="setDays"
+                        />
+                        Friday</label
+                    >
+                    <label
+                        ><input
+                            type="checkbox"
+                            value="6"
+                            v-model="daySelections[6]"
+                            @change="setDays"
+                        />
+                        Saturday</label
+                    >
+                    <label
+                        ><input
+                            type="checkbox"
+                            value="0"
+                            v-model="daySelections[0]"
+                            @change="setDays"
+                        />
+                        Sunday</label
+                    >
+                    <NumberInput
+                        :label="'Snoozes'"
+                        :value="$store.state.snoozesAllowed"
+                        :max="10"
+                        :min="1"
+                        @change="setSnoozes"
+                    />
                 </template>
                 <template v-slot:footer>
                     <button

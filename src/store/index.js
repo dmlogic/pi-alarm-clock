@@ -6,9 +6,12 @@ export default createStore({
             timeNow: null,
             weatherAuthenticationError: false,
             alarmIsSet: false,
-            alarmHour: null,
-            alarmMinute: null,
-            alarmDays: [],
+            alarmHour: 15,
+            alarmMinute: 22,
+            alarmDays: [1, 2, 3, 4, 5],
+            snoozesAllowed: 3,
+            snoozeMinutes: 10,
+            snoozeMinutes: 10,
         }
     },
     mutations: {
@@ -18,10 +21,20 @@ export default createStore({
         setAuthenticationError(state, value) {
             state.weatherAuthenticationError = Boolean(value)
         },
-        setAlarm(state, values) {
-            state.alarmHour = values.hour
-            state.alarmMinute = values.minute
-            state.alarmDays = values.days
+        setAlarmHour(state, value) {
+            state.alarmHour = parseInt(value)
+        },
+        setAlarmMinute(state, value) {
+            state.alarmMinute = parseInt(value)
+        },
+        setSnoozes(state, value) {
+            state.snoozesAllowed = parseInt(value)
+        },
+        setAlarmDays(state, value) {
+            state.alarmDays = value
+        },
+        setOnOff(state, value) {
+            state.alarmIsSet = Boolean(value)
         },
     },
 })
