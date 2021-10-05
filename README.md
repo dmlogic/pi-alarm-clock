@@ -19,4 +19,3 @@ Weather is provided as:
 -   A min and max temperature for the current day
 -   Forecast summary for the next 24 hours in 3-hour intervals
 -   Alerts badges on key weather events: High UV, Cold and Rain
-

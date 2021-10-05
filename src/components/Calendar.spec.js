@@ -27,7 +27,7 @@ describe("Calendar", () => {
         "December",
     ]
 
-    it ("displays the date in expected format", async () => {
+    it("displays the date in expected format", async () => {
         const wrapper = mount(Calendar)
 
         let now = new Date()

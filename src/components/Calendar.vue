@@ -44,7 +44,7 @@ export default defineComponent({
             this.month = this.months[fromDate.getMonth()]
             this.year = fromDate.getFullYear().toString()
         },
-    }
+    },
 })
 </script>
 
