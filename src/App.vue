@@ -60,7 +60,7 @@ export default defineComponent({
             }
         },
         updateCalendar() {
-            this.$refs.calendar.update()
+            this.$refs.calendar.update(this.$store.state.timeNow)
         },
         updateWeatherForecast() {
             if (this.$store.state.weatherAuthenticationError) {

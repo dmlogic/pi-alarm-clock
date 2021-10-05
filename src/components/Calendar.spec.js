@@ -27,10 +27,11 @@ describe("Calendar", () => {
         "December",
     ]
 
-    it("displays the date in expected format", async () => {
+    it ("displays the date in expected format", async () => {
         const wrapper = mount(Calendar)
 
         let now = new Date()
+        wrapper.vm.update(now)
         await wrapper.find(".calendar")
         let day = await wrapper.find(".calendar-day").text()
         let date = await wrapper.find(".calendar-dom").text()

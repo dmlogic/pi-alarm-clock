@@ -1,4 +1,5 @@
 import { shallowMount } from "@vue/test-utils"
+import store from "../../store"
 import Weather from "./Weather.vue"
 
 function sleep(milliseconds) {
@@ -6,21 +7,23 @@ function sleep(milliseconds) {
 }
 
 describe("Weather", () => {
-    it("does not show any weather if auth error", () => {
+    it ("does not show any weather if auth error", () => {
+        store.commit("setAuthenticationError",true)
         const wrapper = shallowMount(Weather, {
-            propsData: {
-                authError: true,
-            },
+            global: {
+                plugins: [store]
+            }
         })
         expect(wrapper.find(".auth").isVisible()).toBe(true)
         expect(wrapper.find(".weather").exists()).toBe(false)
     })
 
-    it("does not show auth warning if prop to false", () => {
+    it("does not show auth warning connection is fine", () => {
+        store.commit("setAuthenticationError",false)
         const wrapper = shallowMount(Weather, {
-            propsData: {
-                authError: false,
-            },
+            global: {
+                plugins: [store]
+            }
         })
         expect(wrapper.find(".auth").exists()).toBe(false)
         expect(wrapper.find(".weather").exists()).toBe(true)
