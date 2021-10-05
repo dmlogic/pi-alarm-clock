@@ -1,3 +1,28 @@
+<script>
+import { defineComponent } from "vue"
+
+export default defineComponent({
+    props: ["mt"],
+    computed: {
+        class() {
+            let mt = this.mt || "mt-6"
+            return `modal
+                    text-white
+                    inline-block
+                    align-top
+                    bg-pink-900
+                    rounded-lg
+                    text-left
+                    overflow-hidden
+                    shadow-xl
+                    transform
+                    transition-all
+                    ${mt}`
+        },
+    },
+})
+</script>
+
 <style>
 .modal-wrap {
     width: 800px;
@@ -24,22 +49,7 @@
                 "
                 aria-hidden="true"
             ></div>
-            <div
-                class="
-                    modal
-                    text-white
-                    mt-6
-                    inline-block
-                    align-top
-                    bg-pink-900
-                    rounded-lg
-                    text-left
-                    overflow-hidden
-                    shadow-xl
-                    transform
-                    transition-all
-                "
-            >
+            <div :class="class" >
                 <div class="p-4">
                     <slot name="body"></slot>
                 </div>

@@ -15,6 +15,10 @@ export default defineComponent({
              */
             isSnoozed: false,
             /**
+             * When the current snooze will end
+             */
+            snoozeEnds: null,
+            /**
              * The snooze timer object
              */
             snoozeTimer: null,
@@ -50,15 +54,19 @@ export default defineComponent({
             this.snoozeCount = 0
             this.startAlarm()
         },
-        snoozeAlarm() {
+        snoozeAlarm(e) {
             this.stopAlarmPlayback()
             this.snoozeCount++
             this.isSnoozed = true
             this.isGoingOff = false
+            const timeUntilNextPlayback = this.$store.state.snoozeMinutes * 60 * 1000
             this.snoozeTimer = setTimeout(
                 this.startAlarm,
-                this.$store.state.snoozeMinutes * 60 * 1000
+                timeUntilNextPlayback
             )
+            const timeOfNextPlayback = this.$store.state.timeNow.getTime() + timeUntilNextPlayback, d = new Date;
+            d.setTime(timeOfNextPlayback)
+            this.snoozeEnds = d;
         },
         startAlarm() {
             if (!this.$store.state.alarmIsSet) {
@@ -68,6 +76,7 @@ export default defineComponent({
             this.isGoingOff = true
             this.isSnoozed = false
             this.snoozeTimer = null
+            this.snoozeEnds = null
         },
         dismissAlarm() {
             this.stopAlarmPlayback()
@@ -75,6 +84,7 @@ export default defineComponent({
             this.isSnoozed = false
             this.snoozeCount = 0
             this.snoozeTimer = null
+            this.snoozeEnds = null
         },
         startAlarmPlayback() {
             this.audioFile.play()
@@ -83,6 +93,7 @@ export default defineComponent({
             this.audioFile.pause()
         },
         timeToGoOff() {
+            return true;
             const timeNow =
                     this.$store.state.timeNow.getHours() +
                     ":" +
@@ -127,6 +138,12 @@ export default defineComponent({
         bellClass() {
             return this.$store.state.alarmIsSet ? "bell-set" : "bell-off"
         },
+        nextAlarmPlay() {
+            if(!this.snoozeEnds) {
+                return '-'
+            }
+            return this.snoozeEnds.getHours()+':'+this.snoozeEnds.getMinutes();
+        }
     },
     mounted() {
         this.$store.state.alarmDays.forEach(
@@ -147,6 +164,9 @@ export default defineComponent({
     position: fixed;
     top: 0;
     left: 0;
+}
+.snooze {
+    top:100px;
 }
 [class^="bell-"] {
     position: absolute;
@@ -351,14 +371,22 @@ export default defineComponent({
             </Modal>
         </section>
 
-        <section class="alert" v-if="isGoingOff">
-            <h1>ALARM</h1>
-            <div v-if="isSnoozed">
-                <p>Snoozed until [when]...</p>
-            </div>
-            <div v-else>
-                <button>Snooze</button>
-            </div>
+        <section class="alert snooze" v-if="isSnoozed">
+            <Modal :mt="'mt-36'">
+                <template v-slot:body>
+                    <p class="font-display text-center font-extrabold text-6xl">
+                        Alarm!
+                    </p>
+                    <div class="text-center">
+                        <p class="py-4 text-xl">Snoozed until {{nextAlarmPlay}}</p>
+                        <Button
+                            :label="'CANCEL'"
+                            :size="'text-4xl'"
+                            v-on:click="dismissAlarm"
+                        />
+                    </div>
+                </template>
+            </Modal>
         </section>
     </div>
 </template>

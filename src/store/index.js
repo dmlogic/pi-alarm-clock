@@ -6,7 +6,7 @@ export default createStore({
             timeNow: null,
             audioError: true,
             weatherAuthenticationError: false,
-            alarmIsSet: false,
+            alarmIsSet: true,
             alarmHour: 6,
             alarmMinute: 30,
             alarmDays: [1, 2, 3, 4, 5],
