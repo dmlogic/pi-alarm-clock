@@ -18,3 +18,7 @@ sudo cp -r ~/pi-alarm-clock/dist/* /var/www/html/
 
 # we'll want to hide the mouse cursor
 sudo apt install unclutter
+
+# Turn off that LED
+# add this to sudo cron
+# @reboot echo 0 > /sys/devices/platform/leds/leds/led1/brightness

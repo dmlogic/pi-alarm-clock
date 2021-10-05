@@ -2,11 +2,6 @@
 
 # Consider popping all this in /etc/xdg/lxsession/LXDE-pi/autostart
 
-# Turn off that LED
-# sudo su
-# echo 0 > /sys/devices/platform/leds/leds/led1/brightness
-# exit
-
 # Make it so the screen goes blank nice and quick
 xset s 10
 

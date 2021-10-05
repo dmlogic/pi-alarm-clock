@@ -17,7 +17,7 @@ export default defineComponent({
             forecast5: {},
             forecast6: {},
             forecast7: {},
-            forecast8: {},
+            forecast8: {}
         }
     },
     methods: {
