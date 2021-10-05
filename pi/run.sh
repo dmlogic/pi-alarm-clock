@@ -1,5 +1,9 @@
 #!/usr/bin/bash
 
+# Turn off that LED
+# add this to sudo cron
+# @reboot echo 0 > /sys/devices/platform/leds/leds/led1/brightness
+
 # Consider popping all this in /etc/xdg/lxsession/LXDE-pi/autostart
 
 # Make it so the screen goes blank nice and quick
