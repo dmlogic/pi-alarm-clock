@@ -4,6 +4,7 @@ export default createStore({
     state() {
         return {
             timeNow: null,
+            audioError: true,
             weatherAuthenticationError: false,
             alarmIsSet: false,
             alarmHour: 6,
@@ -14,6 +15,9 @@ export default createStore({
         }
     },
     mutations: {
+        setAudioError(state, value) {
+            state.audioError = Boolean(value)
+        },
         setTime(state, value) {
             state.timeNow = value
         },

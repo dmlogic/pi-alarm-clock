@@ -16,6 +16,7 @@ export default defineComponent({
     data() {
         return {
             networkError: false,
+            audioError: this.$store.state.audioError,
         }
     },
     methods: {
@@ -100,7 +101,15 @@ export default defineComponent({
 <style></style>
 
 <template>
-    <div class="page">
+    <div
+        class="auth text-yellow-600 font-bold text-center text-center text-2xl"
+        v-if="audioError"
+    >
+        <p>No audio playback available</p>
+        <p>Please power-off the clock and reboot</p>
+    </div>
+
+    <div class="page" v-if="!audioError">
         <div class="grid grid-flow-col grid-cols-2 grid-rows-1 gap-4">
             <Clock @minute="onNewMinute" @hour="onNewHour" />
             <Calendar ref="calendar" />
