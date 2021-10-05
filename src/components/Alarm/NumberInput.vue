@@ -46,6 +46,7 @@ export default defineComponent({
             <input
                 v-model="internalValue"
                 type="text"
+                readonly
                 class="
                     outline-none
                     text-center

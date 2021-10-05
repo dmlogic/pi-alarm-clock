@@ -6,8 +6,8 @@
         "build": "vite build",
         "serve": "vite preview",
         "test": "npm run test:vue-components && npm run test:unit",
-        "test:vue-components": "jest --config=jest.config.js src",
-        "test:unit": "jest --config=jest.config.js src/weather/*.spec.js",
+        "test:vue-components": "jest --coverage --config=jest.config.js src",
+        "test:unit": "jest --coverage --config=jest.config.js src/weather/*.spec.js",
         "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
         "format": "prettier .  --write"
     },
