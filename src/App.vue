@@ -26,6 +26,7 @@ export default defineComponent({
             this.$refs.alarm.check()
         },
         onNewHour() {
+            this.updateCalendar()
             this.refreshWeatherData()
         },
         createWeatherService() {
@@ -58,6 +59,9 @@ export default defineComponent({
                 this.setWeatherError(error)
             }
         },
+        updateCalendar() {
+            this.$refs.calendar.update()
+        },
         updateWeatherForecast() {
             if (this.$store.state.weatherAuthenticationError) {
                 return
@@ -81,6 +85,7 @@ export default defineComponent({
         },
     },
     mounted() {
+        this.updateCalendar()
         this.refreshWeatherData()
     },
     components: {
@@ -98,7 +103,7 @@ export default defineComponent({
     <div class="page">
         <div class="grid grid-flow-col grid-cols-2 grid-rows-1 gap-4">
             <Clock @minute="onNewMinute" @hour="onNewHour" />
-            <Calendar />
+            <Calendar ref="calendar" />
         </div>
         <Weather ref="weather" />
         <Alarm ref="alarm" />

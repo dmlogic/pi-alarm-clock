@@ -35,7 +35,7 @@ export default defineComponent({
         }
     },
     methods: {
-        updateCalendar() {
+        update() {
             this.day = this.days[this.now.getDay()]
             this.date =
                 String(this.now.getDate()) +
@@ -45,11 +45,7 @@ export default defineComponent({
             this.month = this.months[this.now.getMonth()]
             this.year = this.now.getFullYear().toString()
         },
-    },
-    mounted() {
-        const timer = setInterval(this.updateCalendar, 60000)
-        this.updateCalendar()
-    },
+    }
 })
 </script>
 
