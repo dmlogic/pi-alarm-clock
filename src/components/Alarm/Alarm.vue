@@ -93,7 +93,6 @@ export default defineComponent({
             this.audioFile.pause()
         },
         timeToGoOff() {
-            return true;
             const timeNow =
                     this.$store.state.timeNow.getHours() +
                     ":" +
