@@ -49,7 +49,7 @@ export default defineComponent({
                 "
                 aria-hidden="true"
             ></div>
-            <div :class="class" >
+            <div :class="class">
                 <div class="p-4">
                     <slot name="body"></slot>
                 </div>

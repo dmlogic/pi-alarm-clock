@@ -59,14 +59,17 @@ export default defineComponent({
             this.snoozeCount++
             this.isSnoozed = true
             this.isGoingOff = false
-            const timeUntilNextPlayback = this.$store.state.snoozeMinutes * 60 * 1000
+            const timeUntilNextPlayback =
+                this.$store.state.snoozeMinutes * 60 * 1000
             this.snoozeTimer = setTimeout(
                 this.startAlarm,
                 timeUntilNextPlayback
             )
-            const timeOfNextPlayback = this.$store.state.timeNow.getTime() + timeUntilNextPlayback, d = new Date;
+            const timeOfNextPlayback =
+                    this.$store.state.timeNow.getTime() + timeUntilNextPlayback,
+                d = new Date()
             d.setTime(timeOfNextPlayback)
-            this.snoozeEnds = d;
+            this.snoozeEnds = d
         },
         startAlarm() {
             if (!this.$store.state.alarmIsSet) {
@@ -138,11 +141,13 @@ export default defineComponent({
             return this.$store.state.alarmIsSet ? "bell-set" : "bell-off"
         },
         nextAlarmPlay() {
-            if(!this.snoozeEnds) {
-                return '-'
+            if (!this.snoozeEnds) {
+                return "-"
             }
-            return this.snoozeEnds.getHours()+':'+this.snoozeEnds.getMinutes();
-        }
+            return (
+                this.snoozeEnds.getHours() + ":" + this.snoozeEnds.getMinutes()
+            )
+        },
     },
     mounted() {
         this.$store.state.alarmDays.forEach(
@@ -165,7 +170,7 @@ export default defineComponent({
     left: 0;
 }
 .snooze {
-    top:100px;
+    top: 100px;
 }
 [class^="bell-"] {
     position: absolute;
@@ -377,7 +382,9 @@ export default defineComponent({
                         Alarm!
                     </p>
                     <div class="text-center">
-                        <p class="py-4 text-xl">Snoozed until {{nextAlarmPlay}}</p>
+                        <p class="py-4 text-xl">
+                            Snoozed until {{ nextAlarmPlay }}
+                        </p>
                         <Button
                             :label="'CANCEL'"
                             :size="'text-4xl'"

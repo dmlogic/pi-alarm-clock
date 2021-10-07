@@ -1,8 +1,10 @@
 #!/usr/bin/bash
 
+# CRONS
 # Turn off that LED
-# add this to sudo cron
 # @reboot echo 0 > /sys/devices/platform/leds/leds/led1/brightness
+# Check sound card availability at startup
+# @reboot /home/pi/pi-alarm-clock/test-audio.shs
 
 # Consider popping all this in /etc/xdg/lxsession/LXDE-pi/autostart
 
