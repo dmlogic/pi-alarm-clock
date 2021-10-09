@@ -3,6 +3,7 @@ import { defineComponent } from "vue"
 import Modal from "./Modal.vue"
 import NumberInput from "./NumberInput.vue"
 import Button from "./Button.vue"
+import { padTime } from "../../functions.js"
 export default defineComponent({
     data() {
         return {
@@ -162,7 +163,7 @@ export default defineComponent({
                 return "-"
             }
             return (
-                this.snoozeEnds.getHours() + ":" + this.snoozeEnds.getMinutes()
+                padTime(this.snoozeEnds.getHours()) + ":" + padTime(this.snoozeEnds.getMinutes())
             )
         },
     },
