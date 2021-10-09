@@ -86,8 +86,8 @@ export default defineComponent({
         },
     },
     mounted() {
-        this.updateCalendar()
         this.refreshWeatherData()
+        this.updateCalendar()
     },
     components: {
         Clock,

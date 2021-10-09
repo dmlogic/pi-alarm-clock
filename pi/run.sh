@@ -4,7 +4,7 @@
 # Turn off that LED
 # @reboot echo 0 > /sys/devices/platform/leds/leds/led1/brightness
 # Check sound card availability at startup
-# @reboot /home/pi/pi-alarm-clock/test-audio.shs
+# @reboot /home/pi/pi-alarm-clock/pi/test-audio.sh
 
 # Consider popping all this in /etc/xdg/lxsession/LXDE-pi/autostart
 

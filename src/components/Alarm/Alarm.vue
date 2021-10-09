@@ -37,7 +37,7 @@ export default defineComponent({
             /**
              * The sound we will play
              */
-            audioFile: new Audio("/audio/beep-beep.mp3"),
+            audioFile: new Audio(this.$store.state.audioFile),
             /**
              * The days set to sound the alarm
              */
@@ -84,7 +84,7 @@ export default defineComponent({
             this.isSnoozed = false
             this.snoozeTimer = null
             this.snoozeEnds = null
-            this.goingOffTimer = setTimeout(this.dismissAlarm,10 * 60 * 1000);
+            this.goingOffTimer = setTimeout(this.dismissAlarm, 10 * 60 * 1000)
         },
         dismissAlarm() {
             this.stopAlarmPlayback()
@@ -95,6 +95,8 @@ export default defineComponent({
             this.snoozeEnds = null
         },
         startAlarmPlayback() {
+            this.audioFile.volume = this.$store.state.volume / 10
+            this.audioFile.loop = true
             this.audioFile.play()
         },
         stopAlarmPlayback() {
@@ -128,6 +130,15 @@ export default defineComponent({
         },
         setSnoozeMinutes(to) {
             this.$store.commit("setSnoozeMinutes", to)
+        },
+        setVolume(to) {
+            this.$store.commit("setVolume", to)
+            const audioPreview = new Audio("/audio/beep-beep.mp3")
+            audioPreview.volume = parseInt(to) / 10
+            audioPreview.play()
+            setTimeout(function () {
+                audioPreview.pause()
+            }, 1000)
         },
         setDays() {
             let selection = []
@@ -369,6 +380,13 @@ export default defineComponent({
                             :max="10"
                             :min="5"
                             @change="setSnoozeMinutes"
+                        />
+                        <NumberInput
+                            :label="'Volume'"
+                            :value="$store.state.volume"
+                            :max="10"
+                            :min="1"
+                            @change="setVolume"
                         />
                     </div>
                 </template>

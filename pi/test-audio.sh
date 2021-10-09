@@ -8,4 +8,4 @@ OUTPUT=$(aplay -l)
 if [[ $OUTPUT == *"device 0:"* ]]; then
     JSON="const audio_available = true;"
 fi
-echo "${JSON}" > "/var/www/audio_status.js"
+echo "${JSON}" > "/var/www/html/audio_status.js"

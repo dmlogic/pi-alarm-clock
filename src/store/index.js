@@ -12,6 +12,8 @@ export default createStore({
             alarmDays: [1, 2, 3, 4, 5],
             snoozesAllowed: 3,
             snoozeMinutes: 10,
+            volume: 5,
+            audioFile: "/audio/beep-beep.mp3",
         }
     },
     mutations: {
@@ -41,6 +43,12 @@ export default createStore({
         },
         setOnOff(state, value) {
             state.alarmIsSet = Boolean(value)
+        },
+        setVolume(state, value) {
+            state.volume = parseInt(value)
+        },
+        setAudioFile(state, value) {
+            state.audioFile = value
         },
     },
 })
