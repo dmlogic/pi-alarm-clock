@@ -11,6 +11,10 @@ export default defineComponent({
              */
             isGoingOff: false,
             /**
+             * The monitor for how long the alarm has been sounding
+             */
+            goingOffTimer: null,
+            /**
              * Has the alarm been snoozed?
              */
             isSnoozed: false,
@@ -80,6 +84,7 @@ export default defineComponent({
             this.isSnoozed = false
             this.snoozeTimer = null
             this.snoozeEnds = null
+            this.goingOffTimer = setTimeout(this.dismissAlarm,10 * 60 * 1000);
         },
         dismissAlarm() {
             this.stopAlarmPlayback()
@@ -93,6 +98,7 @@ export default defineComponent({
             this.audioFile.play()
         },
         stopAlarmPlayback() {
+            clearTimeout(this.goingOffTimer)
             this.audioFile.pause()
         },
         timeToGoOff() {
