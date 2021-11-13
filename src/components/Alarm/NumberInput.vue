@@ -14,7 +14,7 @@ export default defineComponent({
         increment() {
             let nextValue = this.internalValue + 1
             if (nextValue > this.max) {
-                nextValue = 1
+                nextValue = this.min
             }
             this.internalValue = nextValue
             this.$emit("change", this.internalValue)

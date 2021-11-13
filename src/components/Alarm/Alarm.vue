@@ -163,7 +163,9 @@ export default defineComponent({
                 return "-"
             }
             return (
-                padTime(this.snoozeEnds.getHours()) + ":" + padTime(this.snoozeEnds.getMinutes())
+                padTime(this.snoozeEnds.getHours()) +
+                ":" +
+                padTime(this.snoozeEnds.getMinutes())
             )
         },
     },
