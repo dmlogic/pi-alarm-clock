@@ -84,12 +84,14 @@ export default defineComponent({
                         "
                     >
                         <NumberInput
+                            data-testid="hour"
                             :label="'Hour'"
                             :value="$store.state.alarmHour"
                             :max="23"
                             @change="setHour"
                         />
                         <NumberInput
+                            data-testid="minute"
                             :label="'Minute'"
                             :value="$store.state.alarmMinute"
                             :max="59"
@@ -98,6 +100,7 @@ export default defineComponent({
                     </div>
 
                     <div
+                        data-testid="days"
                         class="
                             mb-6
                             grid grid-flow-col grid-cols-7 grid-rows-1
@@ -181,6 +184,7 @@ export default defineComponent({
                         class="grid grid-flow-col grid-cols-3 grid-rows-1 gap-4"
                     >
                         <NumberInput
+                            data-testid="snoozeCount"
                             :label="'Snoozes'"
                             :value="$store.state.snoozesAllowed"
                             :max="10"
@@ -188,6 +192,7 @@ export default defineComponent({
                             @change="setSnoozes"
                         />
                         <NumberInput
+                            data-testid="snoozeMinutes"
                             :label="'Snooze minutes'"
                             :value="$store.state.snoozeMinutes"
                             :max="10"
@@ -195,6 +200,7 @@ export default defineComponent({
                             @change="setSnoozeMinutes"
                         />
                         <NumberInput
+                            data-testid="volume"
                             :label="'Volume'"
                             :value="$store.state.volume"
                             :max="10"
@@ -205,6 +211,7 @@ export default defineComponent({
                 </template>
                 <template v-slot:footer>
                     <Button
+                        data-testid="close"
                         :label="'OK'"
                         v-on:click="$emit('close')"
                     />

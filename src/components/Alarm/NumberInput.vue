@@ -38,6 +38,7 @@ export default defineComponent({
         </div>
         <div class="flex flex-row rounded-lg relative my-2">
             <button
+                data-testid="decrement"
                 class="bg-gray-300 text-gray-400 w-20 rounded-l outline-none"
                 @click="decrement"
             >
@@ -61,6 +62,7 @@ export default defineComponent({
                 "
             />
             <button
+                data-testid="increment"
                 class="bg-gray-300 text-gray-400 w-20 rounded-r"
                 @click="increment"
             >

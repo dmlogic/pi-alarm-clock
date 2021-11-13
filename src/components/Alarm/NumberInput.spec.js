@@ -31,9 +31,9 @@ describe('NumberInput', () => {
         let buttons = wrapper.findAll('button')
         expect(buttons.length).toBe(2)
 
-        await buttons[1].trigger('click')
+        await wrapper.find('[data-testid="increment"]').trigger('click')
         expect(wrapper.vm.internalValue).toBe(6)
-        await buttons[0].trigger('click')
+        await wrapper.find('[data-testid="decrement"]').trigger('click')
         expect(wrapper.vm.internalValue).toBe(5)
     })
 
@@ -48,17 +48,19 @@ describe('NumberInput', () => {
                 name: 'test name',
             },
         })
-        let buttons = wrapper.findAll('button')
+        let increment = wrapper.find('[data-testid="increment"]')
+        let decrement = wrapper.find('[data-testid="decrement"]')
+
         // click up and end up at min value
         for (let index = 0; index < 3; index++) {
-            await buttons[1].trigger('click')
+            await increment.trigger('click')
         }
         expect(wrapper.vm.internalValue).toBe(0)
 
         wrapper.setData({ internalValue: 3 })
         // click down and end up at max value
         for (let index = 0; index < 4; index++) {
-            await buttons[0].trigger('click')
+            await decrement.trigger('click')
         }
         expect(wrapper.vm.internalValue).toBe(3)
     })
