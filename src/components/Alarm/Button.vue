@@ -1,10 +1,10 @@
 <script>
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue'
 export default defineComponent({
-    props: ["label", "size"],
+    props: ['label', 'size'],
     computed: {
         class() {
-            let tsize = this.size || "text-2xl"
+            let tsize = this.size || 'text-2xl'
             return `bg-yellow-500
                         font-bold font-display
                         inline-flex

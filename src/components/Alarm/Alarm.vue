@@ -1,9 +1,9 @@
 <script>
-import { defineComponent } from "vue"
-import Modal from "./Modal.vue"
-import NumberInput from "./NumberInput.vue"
-import Button from "./Button.vue"
-import { padTime } from "../../functions.js"
+import { defineComponent } from 'vue'
+import Modal from './Modal.vue'
+import NumberInput from './NumberInput.vue'
+import Button from './Button.vue'
+import { padTime } from '../../functions.js'
 export default defineComponent({
     data() {
         return {
@@ -107,11 +107,11 @@ export default defineComponent({
         timeToGoOff() {
             const timeNow =
                     this.$store.state.timeNow.getHours() +
-                    ":" +
+                    ':' +
                     this.$store.state.timeNow.getMinutes(),
                 triggerTime =
                     this.$store.state.alarmHour +
-                    ":" +
+                    ':' +
                     this.$store.state.alarmMinute,
                 triggerDay = this.$store.state.timeNow.getDay()
 
@@ -121,20 +121,20 @@ export default defineComponent({
             )
         },
         setHour(to) {
-            this.$store.commit("setAlarmHour", to)
+            this.$store.commit('setAlarmHour', to)
         },
         setMinute(to) {
-            this.$store.commit("setAlarmMinute", to)
+            this.$store.commit('setAlarmMinute', to)
         },
         setSnoozes(to) {
-            this.$store.commit("setSnoozes", to)
+            this.$store.commit('setSnoozes', to)
         },
         setSnoozeMinutes(to) {
-            this.$store.commit("setSnoozeMinutes", to)
+            this.$store.commit('setSnoozeMinutes', to)
         },
         setVolume(to) {
-            this.$store.commit("setVolume", to)
-            const audioPreview = new Audio("/audio/beep-beep.mp3")
+            this.$store.commit('setVolume', to)
+            const audioPreview = new Audio('/audio/beep-beep.mp3')
             audioPreview.volume = parseInt(to) / 10
             audioPreview.play()
             setTimeout(function () {
@@ -148,23 +148,23 @@ export default defineComponent({
                     selection.push(index)
                 }
             }
-            this.$store.commit("setAlarmDays", selection)
+            this.$store.commit('setAlarmDays', selection)
         },
         setOnOff(ev) {
-            this.$store.commit("setOnOff", ev.target.checked)
+            this.$store.commit('setOnOff', ev.target.checked)
         },
     },
     computed: {
         bellClass() {
-            return this.$store.state.alarmIsSet ? "bell-set" : "bell-off"
+            return this.$store.state.alarmIsSet ? 'bell-set' : 'bell-off'
         },
         nextAlarmPlay() {
             if (!this.snoozeEnds) {
-                return "-"
+                return '-'
             }
             return (
                 padTime(this.snoozeEnds.getHours()) +
-                ":" +
+                ':' +
                 padTime(this.snoozeEnds.getMinutes())
             )
         },
@@ -192,7 +192,7 @@ export default defineComponent({
 .snooze {
     top: 100px;
 }
-[class^="bell-"] {
+[class^='bell-'] {
     position: absolute;
     top: 180px;
     left: 702px;

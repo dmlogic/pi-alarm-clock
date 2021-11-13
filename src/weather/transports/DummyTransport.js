@@ -25,7 +25,7 @@ class DummyTransport {
 
     getMockedData() {
         this.checkForError()
-        if (typeof this.payload !== "object") {
+        if (typeof this.payload !== 'object') {
             return {}
         }
         return this.payload

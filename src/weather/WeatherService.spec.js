@@ -1,39 +1,39 @@
-import DummyTransport from "./transports/DummyTransport.js"
-import WeatherService from "./WeatherService.js"
+import DummyTransport from './transports/DummyTransport.js'
+import WeatherService from './WeatherService.js'
 import {
     mockDailyForecast,
     mockHourlyForecast,
-} from "../../tests/metoffice_mocks.js"
-import fs from "fs"
-import { time } from "console"
-import { datatype } from "faker/locale/en_GB"
+} from '../../tests/metoffice_mocks.js'
+import fs from 'fs'
+import { time } from 'console'
+import { datatype } from 'faker/locale/en_GB'
 
 const startOfDay = 1
 const middleOfDay = 13
 
-describe("WeatherService", () => {
-    it("throws expected error for temperature check", () => {
-        const service = makeWeatherService({}, "AUTH_ERROR")
+describe('WeatherService', () => {
+    it('throws expected error for temperature check', () => {
+        const service = makeWeatherService({}, 'AUTH_ERROR')
 
         expect(() => {
             service.minMaxTemperatures()
-        }).toThrow("AUTH_ERROR")
+        }).toThrow('AUTH_ERROR')
     })
 
-    it("throws expected error for forecast check", () => {
-        const service = makeWeatherService({}, "NETWORK_ERROR")
+    it('throws expected error for forecast check', () => {
+        const service = makeWeatherService({}, 'NETWORK_ERROR')
 
         expect(() => {
             service.forecast(startOfDay)
-        }).toThrow("NETWORK_ERROR")
+        }).toThrow('NETWORK_ERROR')
     })
 
-    it("cannot get temperature without data", () => {
+    it('cannot get temperature without data', () => {
         const service = makeWeatherService({})
         expect(service.minMaxTemperatures()).toBe(null)
     })
 
-    it("gets a min and max temperature for the day", () => {
+    it('gets a min and max temperature for the day', () => {
         const mockData = mockDailyForecast()
         const service = makeWeatherService(mockData.data)
         expect(service.minMaxTemperatures()).toEqual({
@@ -42,15 +42,15 @@ describe("WeatherService", () => {
         })
     })
 
-    it("gets a block of eight objects for a forecast", () => {
+    it('gets a block of eight objects for a forecast', () => {
         const mockData = mockHourlyForecast(middleOfDay)
         const service = makeWeatherService(mockData.data)
         const outcome = service.forecast(middleOfDay)
         expect(outcome.forecast.length).toEqual(8)
-        expect(typeof outcome.forecast[0]).toBe("object")
+        expect(typeof outcome.forecast[0]).toBe('object')
     })
 
-    it("strips the first rep from today if the data time is old", () => {
+    it('strips the first rep from today if the data time is old', () => {
         const mockData = mockHourlyForecast(11)
         const service = makeWeatherService(mockData.data)
         const outcome = service.forecast(13)
@@ -60,7 +60,7 @@ describe("WeatherService", () => {
         expect(outcome.forecast[4].time).toEqual(0)
     })
 
-    it("formats a time block as expected", () => {
+    it('formats a time block as expected', () => {
         const mockData = mockHourlyForecast(middleOfDay)
         const service = makeWeatherService(mockData.data)
         const outcome = service.forecast(middleOfDay)
@@ -74,7 +74,7 @@ describe("WeatherService", () => {
         expect(blockTwo.uv).toBe(mockData.mocks.today[1].uv)
     })
 
-    it("uses the whole day if time now is in the first block", () => {
+    it('uses the whole day if time now is in the first block', () => {
         const mockData = mockHourlyForecast(startOfDay)
         const service = makeWeatherService(mockData.data)
         const outcome = service.forecast(startOfDay)
@@ -97,7 +97,7 @@ describe("WeatherService", () => {
         expect(outcome.forecast[7].uv).toBe(mockData.mocks.today[7].uv)
     })
 
-    it("spreads into tomorrow if the time now is later in the day", () => {
+    it('spreads into tomorrow if the time now is later in the day', () => {
         const mockData = mockHourlyForecast(middleOfDay)
         const service = makeWeatherService(mockData.data)
         const outcome = service.forecast(middleOfDay)
@@ -120,7 +120,7 @@ describe("WeatherService", () => {
         expect(outcome.forecast[7].uv).toBe(mockData.mocks.tomorrow[3].uv)
     })
 
-    it("fills in any gaps if data missing", () => {
+    it('fills in any gaps if data missing', () => {
         const mockData = mockHourlyForecast(middleOfDay)
         // let's kill blocks 2 and 3
         mockData.data.SiteRep.DV.Location.Period[0].Rep[2] = null
@@ -144,10 +144,10 @@ describe("WeatherService", () => {
         expect(outcome.forecast[4].type).toBe(mockData.mocks.tomorrow[0].type)
     })
 
-    it("responds gracefully if data is present but an unexpected format", () => {
+    it('responds gracefully if data is present but an unexpected format', () => {
         const mockData1 = mockHourlyForecast(startOfDay)
         mockData1.data.SiteRep.DV.Location.Period = {
-            what: "a mess",
+            what: 'a mess',
         }
         const service1 = makeWeatherService(mockData1.data)
         const outcome1 = service1.forecast(startOfDay)
@@ -155,7 +155,7 @@ describe("WeatherService", () => {
 
         const mockData2 = mockHourlyForecast(startOfDay)
         mockData2.data.SiteRep.DV.Location.Period[0].Rep[0] = {
-            what: "a mess",
+            what: 'a mess',
         }
         const service2 = makeWeatherService(mockData2.data)
         const outcome2 = service2.forecast(startOfDay)
@@ -163,8 +163,8 @@ describe("WeatherService", () => {
         expect(outcome2.forecast[0].type).toBeNull()
     })
 
-    it("warns about sunscreen when it should", () => {
-        let mockData = mockForWarnings("U", 0, startOfDay)
+    it('warns about sunscreen when it should', () => {
+        let mockData = mockForWarnings('U', 0, startOfDay)
 
         const service1 = makeWeatherService(mockData.data)
         const outcome1 = service1.forecast(startOfDay)
@@ -183,9 +183,9 @@ describe("WeatherService", () => {
         expect(outcome3.warnings.applySunscreen).toBe(true)
     })
 
-    it("warns about rain when it should", () => {
+    it('warns about rain when it should', () => {
         let mocl
-        let mockData = mockForWarnings("Pp", 0, startOfDay)
+        let mockData = mockForWarnings('Pp', 0, startOfDay)
 
         const service1 = makeWeatherService(mockData.data)
         const outcome1 = service1.forecast(startOfDay)
@@ -198,8 +198,8 @@ describe("WeatherService", () => {
         expect(outcome2.warnings.dressForRain).toBe(true)
     })
 
-    it("warns about cold when it should", () => {
-        let mockData = mockForWarnings("T", 22, middleOfDay)
+    it('warns about cold when it should', () => {
+        let mockData = mockForWarnings('T', 22, middleOfDay)
 
         const service1 = makeWeatherService(mockData.data)
         const outcome1 = service1.forecast(middleOfDay)
@@ -235,13 +235,13 @@ const mockForWarnings = function (metric, value, mockTime) {
 }
 
 const makeWeatherService = function (withData, withException) {
-    if (typeof withData !== "object") {
+    if (typeof withData !== 'object') {
         withData = MetOffice.mockWeeklyForecast()
     }
 
     const transport = new DummyTransport(datatype.number(), withData)
 
-    if (typeof withException === "string") {
+    if (typeof withException === 'string') {
         transport.expectError(withException)
     }
     return new WeatherService(transport)

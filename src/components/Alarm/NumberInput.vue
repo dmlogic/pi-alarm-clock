@@ -1,7 +1,7 @@
 <script>
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue'
 export default defineComponent({
-    props: ["value", "label", "max", "min"],
+    props: ['value', 'label', 'max', 'min'],
     data() {
         return {
             internalValue: null,
@@ -17,7 +17,7 @@ export default defineComponent({
                 nextValue = this.min
             }
             this.internalValue = nextValue
-            this.$emit("change", this.internalValue)
+            this.$emit('change', this.internalValue)
         },
         decrement() {
             const floor = this.min || 0
@@ -26,7 +26,7 @@ export default defineComponent({
                 nextValue = this.max
             }
             this.internalValue = nextValue
-            this.$emit("change", this.internalValue)
+            this.$emit('change', this.internalValue)
         },
     },
 })

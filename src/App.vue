@@ -1,15 +1,15 @@
 <script>
-import { defineComponent } from "vue"
-import Clock from "./components/Clock.vue"
-import Calendar from "./components/Calendar.vue"
-import Weather from "./components/Weather/Weather.vue"
-import Alarm from "./components/Alarm/Alarm.vue"
+import { defineComponent } from 'vue'
+import Clock from './components/Clock.vue'
+import Calendar from './components/Calendar.vue'
+import Weather from './components/Weather/Weather.vue'
+import Alarm from './components/Alarm/Alarm.vue'
 
-import HttpTransport from "./weather/transports/HttpTransport.js"
-import WeatherService from "./weather/WeatherService.js"
+import HttpTransport from './weather/transports/HttpTransport.js'
+import WeatherService from './weather/WeatherService.js'
 
 export default defineComponent({
-    name: "App",
+    name: 'App',
     props: {
         mockedWeatherService: null,
     },
@@ -78,8 +78,8 @@ export default defineComponent({
             }
         },
         setWeatherError(error) {
-            if (error === "AUTH_ERROR") {
-                this.$store.commit("setAuthenticationError", true)
+            if (error === 'AUTH_ERROR') {
+                this.$store.commit('setAuthenticationError', true)
                 return false
             }
             this.networkError = error

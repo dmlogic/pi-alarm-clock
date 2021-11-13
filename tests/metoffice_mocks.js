@@ -1,5 +1,5 @@
-import { datatype } from "faker/locale/en_GB"
-import { blockTimeFromHour } from "../src/functions.js"
+import { datatype } from 'faker/locale/en_GB'
+import { blockTimeFromHour } from '../src/functions.js'
 
 /**
  * These functions mock responses from Met Office Datapoint
@@ -22,7 +22,7 @@ export function mockDailyForecast() {
                 Location: {
                     Period: [
                         {
-                            type: "Day",
+                            type: 'Day',
                             Rep: [
                                 {
                                     Dm: response.mocks.high,
@@ -53,7 +53,7 @@ export function mockHourlyForecast(dataHour) {
             SiteRep: {
                 Wx: {},
                 DV: {
-                    type: "Forecast",
+                    type: 'Forecast',
                     Location: {
                         Period: [
                             {

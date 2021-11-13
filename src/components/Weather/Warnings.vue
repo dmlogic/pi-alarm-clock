@@ -1,12 +1,12 @@
 <script>
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue'
 export default defineComponent({
-    props: ["src"],
+    props: ['src'],
 })
 </script>
 
 <style scoped>
-[class^="warning"] {
+[class^='warning'] {
     overflow: hidden;
     background-repeat: no-repeat;
     height: 50px;

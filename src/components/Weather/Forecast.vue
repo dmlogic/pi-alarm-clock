@@ -1,6 +1,6 @@
 <script>
-import { defineComponent } from "vue"
-import { padTime } from "../../functions.js"
+import { defineComponent } from 'vue'
+import { padTime } from '../../functions.js'
 
 const temperatureColours = {
     tm10: [127, 141, 184],
@@ -57,49 +57,49 @@ const temperatureColours = {
 }
 
 export default defineComponent({
-    props: ["src"],
+    props: ['src'],
     computed: {
         rainColour() {
-            if (typeof this.src.rain === "undefined" || this.src.rain < 30) {
-                return ""
+            if (typeof this.src.rain === 'undefined' || this.src.rain < 30) {
+                return ''
             }
-            return "color: rgba(28,116,153)"
+            return 'color: rgba(28,116,153)'
         },
         theTime() {
-            if (typeof this.src.time === "undefined") {
-                return ""
+            if (typeof this.src.time === 'undefined') {
+                return ''
             }
-            return padTime(this.src.time) + ":00"
+            return padTime(this.src.time) + ':00'
         },
         theRain() {
-            if (typeof this.src.rain === "undefined") {
-                return ""
+            if (typeof this.src.rain === 'undefined') {
+                return ''
             }
-            return this.src.rain + "%"
+            return this.src.rain + '%'
         },
         theTemp() {
-            if (typeof this.src.temperature === "undefined") {
-                return ""
+            if (typeof this.src.temperature === 'undefined') {
+                return ''
             }
-            return this.src.temperature + "°"
+            return this.src.temperature + '°'
         },
         theIcon() {
-            if (typeof this.src.type === "undefined") {
-                return ""
+            if (typeof this.src.type === 'undefined') {
+                return ''
             }
             return `<img class="inline-block" src="/weather_icons/${this.src.type}.svg">`
         },
         tempColour() {
-            if (typeof this.src.temperature === "undefined") {
-                return ""
+            if (typeof this.src.temperature === 'undefined') {
+                return ''
             }
             let index
             if (this.src.temperature < -10) {
-                index = "tm10"
+                index = 'tm10'
             } else if (this.src.temperature > 40) {
-                index = "t40"
+                index = 't40'
             } else {
-                index = "t" + String(this.src.temperature).replace("-", "m")
+                index = 't' + String(this.src.temperature).replace('-', 'm')
             }
             return `background: rgb(${temperatureColours[index][0]},${temperatureColours[index][1]},${temperatureColours[index][2]})`
         },

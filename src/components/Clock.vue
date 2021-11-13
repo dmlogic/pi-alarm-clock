@@ -1,13 +1,13 @@
 <script>
-import { defineComponent } from "vue"
-import { padTime } from "../functions.js"
+import { defineComponent } from 'vue'
+import { padTime } from '../functions.js'
 
 export default defineComponent({
     data() {
         return {
-            hours: "",
-            minutes: "",
-            seconds: "",
+            hours: '',
+            minutes: '',
+            seconds: '',
         }
     },
     methods: {
@@ -20,12 +20,12 @@ export default defineComponent({
             this.seconds = padTime(seconds)
 
             if (seconds === 0) {
-                this.$store.commit("setTime", now)
+                this.$store.commit('setTime', now)
                 if (minutes === 0) {
-                    this.$emit("hour")
+                    this.$emit('hour')
                     return
                 }
-                this.$emit("minute")
+                this.$emit('minute')
             }
         },
     },
@@ -42,7 +42,7 @@ export default defineComponent({
     font-size: 6.5rem;
     line-height: 1.1;
 }
-[class^="clock-"] {
+[class^='clock-'] {
     display: inline-block;
 }
 .clock-second {
@@ -50,7 +50,7 @@ export default defineComponent({
 }
 .clock-minute:before,
 .clock-minute:after {
-    content: ":";
+    content: ':';
     font-weight: 300;
 }
 .clock-minute:after {

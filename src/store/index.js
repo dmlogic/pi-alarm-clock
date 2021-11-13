@@ -1,4 +1,4 @@
-import { createStore } from "vuex"
+import { createStore } from 'vuex'
 
 export default createStore({
     state() {
@@ -13,7 +13,7 @@ export default createStore({
             snoozesAllowed: 3,
             snoozeMinutes: 10,
             volume: 5,
-            audioFile: "/audio/beep-beep.mp3",
+            audioFile: '/audio/beep-beep.mp3',
         }
     },
     mutations: {

@@ -8,5 +8,5 @@ export function blockTimeFromHour(hour) {
 }
 
 export function padTime(str) {
-    return String(str).padStart(2, "0")
+    return String(str).padStart(2, '0')
 }

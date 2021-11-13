@@ -1,11 +1,11 @@
 <script>
-import { defineComponent } from "vue"
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-    props: ["mt"],
+    props: ['mt'],
     computed: {
         class() {
-            let mt = this.mt || "mt-6"
+            let mt = this.mt || 'mt-6'
             return `modal
                     text-white
                     inline-block

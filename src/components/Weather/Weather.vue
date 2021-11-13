@@ -1,7 +1,7 @@
 <script>
-import Forecast from "./Forecast.vue"
-import Warnings from "./Warnings.vue"
-import { defineComponent } from "vue"
+import Forecast from './Forecast.vue'
+import Warnings from './Warnings.vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
     data() {

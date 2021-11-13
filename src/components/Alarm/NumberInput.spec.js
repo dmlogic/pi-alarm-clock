@@ -1,19 +1,19 @@
-import { mount } from "@vue/test-utils"
-import NumberInput from "./NumberInput.vue"
+import { mount } from '@vue/test-utils'
+import NumberInput from './NumberInput.vue'
 
-describe("NumberInput", () => {
-    it("renders a number input", () => {
+describe('NumberInput', () => {
+    it('renders a number input', () => {
         const wrapper = mount(NumberInput, {
             propsData: {
                 value: 5,
                 min: 0,
                 max: 10,
                 step: 1,
-                label: "test label",
-                name: "test name",
+                label: 'test label',
+                name: 'test name',
             },
         })
-        expect(wrapper.text()).toContain("test label")
+        expect(wrapper.text()).toContain('test label')
         expect(wrapper.vm.internalValue).toBe(5)
     })
 
@@ -24,12 +24,12 @@ describe("NumberInput", () => {
                 min: 0,
                 max: 10,
                 step: 1,
-                label: "test label",
-                name: "test name",
+                label: 'test label',
+                name: 'test name',
             },
         })
-        let buttons = wrapper.findAll("button");
-        expect(buttons.length).toBe(2);
+        let buttons = wrapper.findAll('button')
+        expect(buttons.length).toBe(2)
 
         await buttons[1].trigger('click')
         expect(wrapper.vm.internalValue).toBe(6)
@@ -44,15 +44,14 @@ describe("NumberInput", () => {
                 min: 0,
                 max: 3,
                 step: 1,
-                label: "test label",
-                name: "test name",
+                label: 'test label',
+                name: 'test name',
             },
         })
-        let buttons = wrapper.findAll("button");
+        let buttons = wrapper.findAll('button')
         // click up and end up at min value
         for (let index = 0; index < 3; index++) {
             await buttons[1].trigger('click')
-
         }
         expect(wrapper.vm.internalValue).toBe(0)
 
@@ -60,7 +59,6 @@ describe("NumberInput", () => {
         // click down and end up at max value
         for (let index = 0; index < 4; index++) {
             await buttons[0].trigger('click')
-
         }
         expect(wrapper.vm.internalValue).toBe(3)
     })

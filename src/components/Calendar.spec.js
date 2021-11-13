@@ -1,42 +1,42 @@
-import { mount } from "@vue/test-utils"
-import Calendar from "./Calendar.vue"
-import ordinal from "ordinal"
+import { mount } from '@vue/test-utils'
+import Calendar from './Calendar.vue'
+import ordinal from 'ordinal'
 
-describe("Calendar", () => {
+describe('Calendar', () => {
     const days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
     ]
     const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
     ]
 
-    it("displays the date in expected format", async () => {
+    it('displays the date in expected format', async () => {
         const wrapper = mount(Calendar)
 
         let now = new Date()
         wrapper.vm.update(now)
-        await wrapper.find(".calendar")
-        let day = await wrapper.find(".calendar-day").text()
-        let date = await wrapper.find(".calendar-dom").text()
-        let month = await wrapper.find(".calendar-month").text()
-        let year = await wrapper.find(".calendar-year").text()
+        await wrapper.find('.calendar')
+        let day = await wrapper.find('.calendar-day').text()
+        let date = await wrapper.find('.calendar-dom').text()
+        let month = await wrapper.find('.calendar-month').text()
+        let year = await wrapper.find('.calendar-year').text()
 
         expect(day).toBe(days[now.getDay()])
         expect(date).toBe(ordinal(now.getDate()))

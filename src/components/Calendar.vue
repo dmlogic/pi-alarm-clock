@@ -1,35 +1,35 @@
 <script>
-import { defineComponent } from "vue"
-import indicator from "ordinal/indicator"
+import { defineComponent } from 'vue'
+import indicator from 'ordinal/indicator'
 export default defineComponent({
     data() {
         return {
-            day: "",
-            date: "",
-            month: "",
-            year: "",
+            day: '',
+            date: '',
+            month: '',
+            year: '',
             days: [
-                "Sunday",
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
+                'Sunday',
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
             ],
             months: [
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December",
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+                'August',
+                'September',
+                'October',
+                'November',
+                'December',
             ],
         }
     },
@@ -38,9 +38,9 @@ export default defineComponent({
             this.day = this.days[fromDate.getDay()]
             this.date =
                 String(fromDate.getDate()) +
-                "<small>" +
+                '<small>' +
                 indicator(fromDate.getDate()) +
-                "</small>"
+                '</small>'
             this.month = this.months[fromDate.getMonth()]
             this.year = fromDate.getFullYear().toString()
         },

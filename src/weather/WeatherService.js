@@ -1,12 +1,12 @@
-import { blockTimeFromHour } from "../functions.js"
+import { blockTimeFromHour } from '../functions.js'
 
 export default class WeatherService {
-    NIGHT_MINIMUM_TOKEN = "Nm"
-    DAY_MINIMUM_TOKEN = "Dm"
-    WEATHER_TYPE_TOKEN = "W"
-    TEMPERATURE_TOKEN = "T"
-    RAIN_PROBABILITY_TOKEN = "Pp"
-    MAX_UV_TOKEN = "U"
+    NIGHT_MINIMUM_TOKEN = 'Nm'
+    DAY_MINIMUM_TOKEN = 'Dm'
+    WEATHER_TYPE_TOKEN = 'W'
+    TEMPERATURE_TOKEN = 'T'
+    RAIN_PROBABILITY_TOKEN = 'Pp'
+    MAX_UV_TOKEN = 'U'
 
     returnedForecast = []
     returnedEvents = {}
@@ -150,11 +150,11 @@ export default class WeatherService {
     }
 
     valueFromToken(block, token) {
-        if (!block || typeof block !== "object") {
+        if (!block || typeof block !== 'object') {
             return null
         }
 
-        if (typeof block[token] === "undefined") {
+        if (typeof block[token] === 'undefined') {
             return null
         }
 
