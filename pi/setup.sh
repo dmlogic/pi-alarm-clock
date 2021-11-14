@@ -18,3 +18,7 @@ sudo cp -r ~/pi-alarm-clock/dist/* /var/www/html/
 
 # we'll want to hide the mouse cursor
 sudo apt install unclutter
+
+# we'll probably want to download some cheeky music
+sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+sudo chmod a+rx /usr/local/bin/youtube-dl

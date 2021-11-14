@@ -179,6 +179,7 @@ export default defineComponent({
 <template>
     <div class="alarm">
         <button
+            data-testid="bell"
             :class="bellClass"
             @click="displaySettings = !displaySettings"
         ></button>
@@ -197,6 +198,7 @@ export default defineComponent({
                         "
                     >
                         <Button
+                            data-testid="snooze"
                             :label="'SNOOZE'"
                             :size="'text-4xl'"
                             v-if="snoozeCount < $store.state.snoozesAllowed"
@@ -204,6 +206,7 @@ export default defineComponent({
                         />
 
                         <Button
+                            data-testid="shutUp"
                             :label="'SHUT UP!'"
                             :size="'text-4xl'"
                             v-on:click="dismissAlarm"
@@ -230,6 +233,7 @@ export default defineComponent({
                             Snoozed until {{ nextAlarmPlay }}
                         </p>
                         <Button
+                            data-testid="cancelSnooze"
                             :label="'CANCEL'"
                             :size="'text-4xl'"
                             v-on:click="dismissAlarm"

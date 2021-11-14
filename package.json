@@ -6,7 +6,7 @@
         "build": "vite build",
         "serve": "vite preview",
         "test": "npm run test:vue-components && npm run test:unit",
-        "test:one": "jest --config=jest.config.js src/components/Alarm/Settings.spec.js",
+        "test:one": "jest --config=jest.config.js src/components/Alarm/Alarm.spec.js",
         "test:vue-components": "jest --coverage --config=jest.config.js src",
         "test:unit": "jest --coverage --config=jest.config.js src/weather/*.spec.js",
         "format": "prettier .  --write"

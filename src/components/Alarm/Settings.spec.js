@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import Settings from './Settings.vue'
-import NumberInput from './NumberInput.vue'
 import store from '../../store'
 
 
@@ -67,14 +66,10 @@ describe('Settings', () => {
     })
 })
 
-const createWrapper = function (data) {
-    const w = mount(Settings, {
+const createWrapper = function () {
+    return mount(Settings, {
         global: {
             plugins: [store],
         },
     })
-    if (typeof data === 'object') {
-        w.setData(data)
-    }
-    return w
 }
