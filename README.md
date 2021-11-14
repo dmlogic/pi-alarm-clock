@@ -4,6 +4,8 @@ This project replaces the original [PI weather clock](https://github.com/dmlogic
 
 Time, date, weather summary and weather alerts are displayed and you can set an alarm to play an mp3 of your choice to wake you up.
 
+![Screenshot from 2021-11-14 08-13-18](https://user-images.githubusercontent.com/1250252/141673812-67a5889b-44d8-4359-a8fb-314a57e7f786.png)
+
 ## Time and date
 
 These pick up from the RasPi itself. It is assumed that the PI is set to the appropriate UK timezone to work with MetOffice.
@@ -23,6 +25,8 @@ Weather is provided as:
 ## Alarm
 
 A basic UI is available to set the days and time of the alarm. The sound defaults to an included generic "beep beep". You may replace this with an mp3 of your choice by adjusting the contents of `alarm_file.js` and restarting.
+
+![Screenshot from 2021-11-14 08-13-36](https://user-images.githubusercontent.com/1250252/141673836-237c8e30-1e19-4bfe-926b-66ec81b0df1e.png)
 
 # Installation and setup
 
