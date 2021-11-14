@@ -51,10 +51,10 @@ Reboot the PI and see the alarm load.
 
 Any source music file that the PI can play can be the alarm tone.
 
-To override the default "beep beep", add the `/var/www/html/alarm_file.js` with a single line:
+To override the default "beep beep", add the file `/var/www/html/alarm_file.js` with a single line:
 
 ```js
- `const alarm_file = '/audio/yourfile.mp3'`
+ const alarm_file = '/audio/yourfile.mp3'
  ```
 
 You may also try the included [`download.sh`](https://github.com/dmlogic/pi-alarm-clock/blob/main/pi/download.sh) if you like.
