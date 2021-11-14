@@ -24,17 +24,17 @@ Weather is provided as:
 
 ## Alarm
 
-A basic UI is available to set the days and time of the alarm. The sound defaults to an included generic "beep beep". You may replace this with an mp3 of your choice by adjusting the contents of `alarm_file.js` and restarting.
+A basic UI is available to set the days and time of the alarm. The sound defaults to an included generic "beep beep" noise. You may replace this with an mp3 of your choice by following the instructions below.
 
 ![Screenshot from 2021-11-14 08-13-36](https://user-images.githubusercontent.com/1250252/141673836-237c8e30-1e19-4bfe-926b-66ec81b0df1e.png)
 
 # Installation and setup
 
-You'll need a Raspberry PI with touchscreen and some sound output. A little USB speaker is the simplest option.
+You'll need a Raspberry PI with touchscreen and some sound output. A little [USB speaker](https://thepihut.com/products/mini-external-usb-stereo-speaker) is the simplest option.
 
 Install the latest, full Raspbian and ensure GIT is installed and the desktop displays correctly.
 
-Grab the `setup.sh` file from the pi folder and run it as the `pi` user.
+Download [`setup.sh`](https://raw.githubusercontent.com/dmlogic/pi-alarm-clock/main/pi/setup.sh) file and run it as the `pi` user.
 
 Copy `.env.sample` to `.env` and populate with your values.
 
@@ -47,3 +47,16 @@ Add the following crons via `sudo crontab -e`
 
 Reboot the PI and see the alarm load.
 
+## Changing the alarm tone to a music file.
+
+Any source music file that the PI can play can be the alarm tone.
+
+To override the default "beep beep", add the `/var/www/html/alarm_file.js` with a single line:
+
+```js
+ `const alarm_file = '/audio/yourfile.mp3'`
+ ```
+
+You may also try the included [`download.sh`](https://github.com/dmlogic/pi-alarm-clock/blob/main/pi/download.sh) if you like.
+
+The PI will need a restart after changing the audio.
