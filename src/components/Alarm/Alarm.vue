@@ -217,10 +217,7 @@ export default defineComponent({
             </Modal>
         </section>
 
-        <Settings
-            v-if="displaySettings"
-            v-on:close="displaySettings = false"
-        />
+        <Settings v-if="displaySettings" v-on:close="displaySettings = false" />
 
         <section class="alert snooze" v-if="isSnoozed">
             <Modal :mt="'mt-36'">

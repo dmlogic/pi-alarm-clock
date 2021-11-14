@@ -47,16 +47,22 @@ Add the following crons via `sudo crontab -e`
 
 Reboot the PI and see the alarm load.
 
-## Changing the alarm tone to a music file.
+## Changing the alarm tone to a music file
 
 Any source music file that the PI can play can be the alarm tone.
 
 To override the default "beep beep", add the file `/var/www/html/alarm_file.js` with a single line:
 
 ```js
- const alarm_file = '/audio/yourfile.mp3'
- ```
+const alarm_file = '/audio/yourfile.mp3'
+```
 
 You may also try the included [`download.sh`](https://github.com/dmlogic/pi-alarm-clock/blob/main/pi/download.sh) if you like.
 
 The PI will need a restart after changing the audio.
+
+## Local development and testing
+
+This is a [VueJS v3](https://v3.vuejs.org/) project built using [Vite](https://vitejs.dev/).
+
+You can clone this repo, `npm install` and then `npm run dev` to run a local version. See package.json for other options.
