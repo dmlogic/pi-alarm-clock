@@ -22,3 +22,6 @@ sudo apt install unclutter
 # we'll probably want to download some cheeky music
 sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
 sudo chmod a+rx /usr/local/bin/youtube-dl
+
+# Run the app on startup
+sudo cp ~/pi-alarm-clock/pi/autostart /etc/xdg/lxsession/LXDE-pi/autostart
